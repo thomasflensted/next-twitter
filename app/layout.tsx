@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import OptionsColumn from "./ui/global/OptionsColumn";
+import UsersColumn from "./ui/global/UsersColumn";
+import MidColumn from "./ui/global/MidColumn";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +19,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className + 'h-screen bg-neutral-50 flex justify-center'}>
+        <div className="flex w-4/6 bg-gray-10">
+          <OptionsColumn />
+          <MidColumn>
+            {children}
+          </MidColumn>
+          <UsersColumn />
+        </div>
+      </body>
     </html>
   );
 }
