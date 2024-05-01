@@ -1,13 +1,15 @@
-import Tweet from "./Tweet"
+import { getTweets } from "@/app/data/data";
+import TweetComponent from "./Tweet"
 
-const Tweets = () => {
+export default async function Tweets() {
 
-    const testArr = [1, 2, 3, 4, 5, 6, 6, 7, 8,]
+    const tweets = await getTweets();
 
     return (
         <>
-            {testArr.map(test => <Tweet key={test} />)}
+            {tweets.map(tweet =>
+                <TweetComponent key={tweet.id} tweet={tweet} />)
+            }
         </>
     )
 }
-export default Tweets

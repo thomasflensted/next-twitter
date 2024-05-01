@@ -2,20 +2,21 @@ import ColumnLeft from "../tweet/ColumnLeft"
 import OptionsBar from "./OptionsBar"
 import SubmitBtn from "./SubmitBtn"
 import TextField from "./TextField"
-import TweetContainer from "./TweetContainer"
+import NewTweetContainer from "./NewTweetContainer"
+import { postTweet } from "@/app/data/actions"
 
 const NewTweet = () => {
     return (
-        <TweetContainer>
+        <NewTweetContainer>
             <ColumnLeft />
-            <form className="h-full w-full flex flex-col p-4">
+            <form className="h-full w-full flex flex-col p-4" action={postTweet}>
                 <TextField />
-                <div className="flex justify-between mt-4">
+                <div className="flex justify-between mt-2">
                     <OptionsBar />
                     <SubmitBtn />
                 </div>
             </form>
-        </TweetContainer>
+        </NewTweetContainer>
     )
 }
 export default NewTweet

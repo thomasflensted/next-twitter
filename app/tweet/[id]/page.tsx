@@ -1,17 +1,17 @@
-import Tweet from "@/app/ui/tweet/Tweet"
-import Link from "next/link"
-import { FaArrowLeft } from "react-icons/fa6"
+import { getTweetById } from "@/app/data/data"
+import BackHeader from "@/app/ui/global/BackHeader"
+import TweetComponent from "@/app/ui/tweet/Tweet"
+import { notFound } from "next/navigation";
 
-const Page = ({ params }: { params: { id: number } }) => {
+export async function Page({ params }: { params: { id: number } }) {
+
+    const tweet = await getTweetById(params.id);
+    if (!tweet) notFound();
+
     return (
         <div>
-            <Link href='/' className="border-b">
-                <div className="group flex gap-4 items-center py-4 px-6 w-min">
-                    <FaArrowLeft className="group-hover:-translate-x-2 transition-all ease-in-out" />
-                    <h1 className="font-semibold">Tweet</h1>
-                </div>
-            </Link>
-            <Tweet />
+            <BackHeader returnUrl="/" text="Back To Feed" />
+            <TweetComponent tweet={tweet} />
         </div>
     )
 }

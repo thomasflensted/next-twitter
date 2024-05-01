@@ -1,7 +1,7 @@
-const TweetContent = () => {
+const TweetContent = ({ content }: { content: string }) => {
     return (
         <div className="w-full flex mt-2 pr-4 mb-4">
-            <p className="text-sm font-light text-gray-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam maiores consectetur inventore ut molestias repellat, voluptates earum odit libero!</p>
+            <p className="dark:text-gray-100 text-sm font-light text-gray-700">{content}</p>
         </div>
     )
 }

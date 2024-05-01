@@ -1,13 +1,16 @@
+import { Suspense } from "react";
 import NewTweet from "./ui/tweet-new/NewTweet"
 import Tweets from "./ui/tweet/Tweets"
+import { MultipleTweetsSkeleton } from "./ui/skeletons/skeletons";
 
-const Home = () => {
+export default async function Home() {
 
   return (
     <>
       <NewTweet />
-      <Tweets />
+      <Suspense fallback={<MultipleTweetsSkeleton />}>
+        <Tweets />
+      </Suspense>
     </>
   )
 }
-export default Home
