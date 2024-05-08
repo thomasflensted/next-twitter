@@ -4,7 +4,7 @@ import NameAndHandle from "./NameAndHandle";
 const AccountRow = () => {
 
     return (
-        <div className="flex px-6 py-3 border-t flex-col">
+        <div className="flex px-6 py-3 border-b flex-col">
             <div className="flex justify-between items-center">
                 <NameAndHandle />
                 <FollowBtn />

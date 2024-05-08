@@ -1,16 +1,16 @@
-import ColumnLeft from "./ColumnLeft"
 import TweetContainer from "./TweetContainer"
 import TweetAccountRow from "./TweetAccountRow"
 import TweetContent from "./TweetContent"
 import TweetOptions from "./TweetOptions"
 import { Tweet } from "@/app/data/types"
+import ProfilePicColumn from "./ProfilePicColumn"
 
 const TweetComponent = ({ tweet }: { tweet: Tweet }) => {
     return (
         <TweetContainer>
-            <ColumnLeft />
+            <ProfilePicColumn />
             <div className="h-full w-full flex flex-col pt-4">
-                <TweetAccountRow tweet_id={tweet.id} />
+                <TweetAccountRow date={tweet.created_at} tweet_id={tweet.id} />
                 <TweetContent content={tweet.content} />
                 <TweetOptions location={tweet.location} />
             </div>

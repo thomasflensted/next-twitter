@@ -1,16 +1,15 @@
 'use client'
 
-import { useState } from "react"
+import { Dispatch, SetStateAction } from "react"
 
-const TextField = () => {
-
-    const [text, setText] = useState('');
+const TextField = ({ text, setText }: { text: string, setText: Dispatch<SetStateAction<string>> }) => {
 
     return (
         <div className="relative">
             <textarea
                 className="bg-neutral-50 w-full flex-grow focus:outline-none resize-none text-sm placeholder:text-gray-400 text-gray-600 dark:bg-neutral-800 dark:text-white"
                 rows={3}
+                value={text}
                 name="content"
                 maxLength={140}
                 placeholder="What's going on?"

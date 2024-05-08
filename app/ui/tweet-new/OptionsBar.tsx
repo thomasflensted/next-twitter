@@ -1,15 +1,19 @@
-import { FaMapPin } from "react-icons/fa";
-import { IoMdHappy } from "react-icons/io";
-import { FaRegImage } from "react-icons/fa6";
-import { BsStars } from "react-icons/bs";
+'use client'
 
-const OptionsBar = () => {
+import ImproveWithAI from "./options/ImproveWithAI";
+import ImagePicker from "./options/ImagePicker";
+import EmojiPicker from "./options/EmojiPicker";
+import LocationPicker from "./options/LocationPicker";
+import { Dispatch, SetStateAction } from "react";
+
+const OptionsBar = ({ image, setImage }: { image: File | undefined, setImage: Dispatch<SetStateAction<File | undefined>> }) => {
+
     return (
         <div className="flex gap-4  flex-grow items-center">
-            <BsStars title="Improve with AI" className="text-emerald-500 text-lg cursor-pointer hover:text-emerald-600" />
-            <FaRegImage title='Add Photo' className="text-emerald-500 text-lg cursor-pointer hover:text-emerald-600" />
-            <IoMdHappy title="Add Emoji" className="text-emerald-500 text-lg cursor-pointer hover:text-emerald-600" />
-            <FaMapPin title='Add Location' className="text-emerald-500 text-lg cursor-pointer hover:text-emerald-600" />
+            <ImproveWithAI />
+            <ImagePicker setImage={setImage} />
+            <EmojiPicker />
+            <LocationPicker />
         </div>
     )
 }
