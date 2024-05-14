@@ -7,14 +7,14 @@ import * as Dropdown from '@radix-ui/react-dropdown-menu';
 import DropdownAI from "./DropdownAI"
 import { fixTextWithAI, improveWithAI, queryAI } from "@/app/data/actions/aiActions";
 
-
 const ImproveWithAI = () => {
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const textContext = useContext(TextContext);
     if (!textContext) return;
     const { text, setText } = textContext;
 
-    const [isLoading, setIsLoading] = useState(false);
 
     const handleAI = async (type: 'improve' | 'query' | 'fix') => {
         setIsLoading(true)
