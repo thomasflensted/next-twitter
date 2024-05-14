@@ -3,7 +3,7 @@
 import { ChangeEvent, Dispatch, SetStateAction, useRef } from "react"
 import { FaRegImage } from "react-icons/fa6"
 
-const ImagePicker = ({ setImage }: { setImage: Dispatch<SetStateAction<File | undefined>> }) => {
+const ImagePicker = ({ setImage }: { setImage: Dispatch<SetStateAction<File | null>> }) => {
 
     const imageRef = useRef<any>(null)
 
@@ -19,6 +19,7 @@ const ImagePicker = ({ setImage }: { setImage: Dispatch<SetStateAction<File | un
                 onChange={(e) => handleImageChange(e)}
                 ref={imageRef}
                 type="file"
+                name='image'
                 className="hidden"
                 accept="image/png, image/jpeg" />
             <FaRegImage

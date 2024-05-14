@@ -1,8 +1,8 @@
 
-import ProfileImage from "../ui/profile/ProfileImage";
-import ProfileContent from "../ui/profile/ProfileContent";
-import Tweets from "../ui/tweet/Tweets";
-import { getProfile } from "../data/data";
+import ProfileImage from "../../ui/profile/ProfileImage";
+import ProfileContent from "../../ui/profile/ProfileContent";
+import Tweets from "../../ui/tweet/Tweets";
+import { getProfile } from "../../data/data";
 import { notFound } from "next/navigation";
 
 export default async function Page({ params }: { params: { handle: string } }) {

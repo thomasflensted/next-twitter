@@ -23,7 +23,7 @@ export async function getTweetById(id: number): Promise<Tweet | null> {
 
 export async function getProfile(handle: string) {
     try {
-        const res = await db.query(`SELECT bio, website, name FROM profile
+        const res = await db.query(`SELECT users.id, bio, website, name FROM profile
                                     JOIN users ON profile.user_id = users.id
                                     WHERE users.handle = '${handle}';`);
         return res.rows[0];

@@ -6,7 +6,7 @@ import EmojiPicker from "./options/EmojiPicker";
 import LocationPicker from "./options/LocationPicker";
 import { Dispatch, SetStateAction } from "react";
 
-const OptionsBar = ({ image, setImage }: { image: File | undefined, setImage: Dispatch<SetStateAction<File | undefined>> }) => {
+const OptionsBar = ({ image, setImage }: { image: File | null, setImage: Dispatch<SetStateAction<File | null>> }) => {
 
     return (
         <div className="flex gap-4  flex-grow items-center">

@@ -1,16 +1,18 @@
-import { Suspense } from "react";
-import NewTweet from "./ui/tweet-new/NewTweet"
-import Tweets from "./ui/tweet/Tweets"
-import { MultipleTweetsSkeleton } from "./ui/skeletons/skeletons";
+'use server'
 
-export default async function Home() {
+import { RegisterLink, LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
 
-  return (
-    <>
-      <NewTweet />
-      <Suspense fallback={<MultipleTweetsSkeleton />}>
-        <Tweets />
-      </Suspense>
-    </>
-  )
+const page = () => {
+    return (
+        <div className="rounded-md bg-white border w-1/5 py-4 flex flex-col gap-2 px-5 items-center mt-10">
+            <h2 className="text-emerald-600 font-medium text-lg">Get Started</h2>
+            <LoginLink className="w-full rounded border py-1.5 text-emerald-600 hover:bg-gray-50 text-center">
+                Sign in
+            </LoginLink>
+            <RegisterLink className="w-full rounded border py-1.5 text-emerald-600 hover:bg-gray-50 text-center">
+                Sign up
+            </RegisterLink>
+        </div>
+    )
 }
+export default page
