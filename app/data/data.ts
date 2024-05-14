@@ -1,3 +1,5 @@
+'use server'
+
 import { db } from "./db";
 import { Tweet } from "./types";
 
