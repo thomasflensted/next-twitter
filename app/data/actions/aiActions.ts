@@ -40,6 +40,3 @@ export async function fixTextWithAI(text: string) {
     });
     return result.choices[0].message.content;
 }
-
-
-//this is a tweet iwth osme text that shoud probably have some commas or sometyhing but im too lazy to do it and the ai can do it
