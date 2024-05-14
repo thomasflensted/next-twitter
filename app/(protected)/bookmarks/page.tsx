@@ -1,6 +1,6 @@
-import Tweets from "../ui/tweet/Tweets"
-import BackHeader from "../ui/global/BackHeader"
-import ColumnHeading from "../ui/global/ColumnHeading"
+import ColumnHeading from "@/app/ui/global/ColumnHeading"
+import Tweets from "@/app/ui/tweet/Tweets"
+
 
 const page = () => {
     return (

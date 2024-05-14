@@ -6,7 +6,6 @@ export default async function Tweets() {
     const tweets = await getTweets();
 
     return (
-        <> {tweets.map(tweet => <TweetComponent key={tweet.id} tweet={tweet} />)}
-        </>
+        <> {tweets.map(tweet => <TweetComponent key={tweet.id} tweet={tweet} />)}</>
     )
 }
