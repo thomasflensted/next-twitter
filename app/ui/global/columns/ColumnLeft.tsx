@@ -1,8 +1,8 @@
-import ThemeButton from "./ThemeButton";
-import ProfileNav from "./ProfileNav";
-import HomeNav from "./HomeNav";
-import BookmarksNav from "./BookmarksNav";
-import Logo from "./Logo";
+import ThemeButton from "../nav-items/ThemeButton";
+import ProfileNav from "../nav-items/ProfileNav";
+import HomeNav from "../nav-items/HomeNav";
+import BookmarksNav from "../nav-items/BookmarksNav";
+import Logo from "../Logo";
 
 const LeftColumn = () => {
     return (
@@ -14,7 +14,7 @@ const LeftColumn = () => {
                 <BookmarksNav />
                 <ThemeButton />
             </ul>
-        </nav >
+        </nav>
     )
 }
 export default LeftColumn

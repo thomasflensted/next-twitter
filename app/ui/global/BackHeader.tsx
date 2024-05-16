@@ -1,12 +1,17 @@
-import Link from "next/link"
+'use client'
+
+import { useRouter } from "next/navigation"
 import { FaArrowLeft } from "react-icons/fa6"
 
-const BackHeader = ({ returnUrl, text }: { returnUrl: string, text: string }) => {
+const BackHeader = () => {
+
+    const { back } = useRouter();
+
     return (
-        <Link href={returnUrl} className="group flex gap-4 items-center py-4 px-6 w-min">
+        <div onClick={() => back()} className="group flex gap-4 items-center py-4 px-6 w-min cursor-pointer">
             <FaArrowLeft className="group-hover:-translate-x-2 transition-all ease-in-out" />
-            <h1 className="font-semibold whitespace-nowrap">{text}</h1>
-        </Link>
+            <h1 className="font-semibold whitespace-nowrap">Back</h1>
+        </div>
     )
 }
 export default BackHeader

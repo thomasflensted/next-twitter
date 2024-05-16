@@ -1,4 +1,4 @@
-import { getTweetById } from "@/app/data/data"
+import { getTweetById } from "@/app/data/tweetData"
 import BackHeader from "@/app/ui/global/BackHeader"
 import TweetComponent from "@/app/ui/tweet/Tweet"
 import { notFound } from "next/navigation";
@@ -10,7 +10,7 @@ export default async function Page({ params }: { params: { id: number } }) {
 
     return (
         <div>
-            <BackHeader returnUrl="/" text="Back To Feed" />
+            <BackHeader />
             <TweetComponent tweet={tweet} />
         </div>
     )

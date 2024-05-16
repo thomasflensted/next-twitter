@@ -1,9 +1,18 @@
+'use client'
+
 const FollowBtn = () => {
-    const following = true;
+
+    const following = false;
+
     return (
         following
-            ? <button className="text-sm border border-emerald-600 hover:bg-emerald-50 text-emerald-600 font-medium rounded-full px-3 py-1">Follow</button>
-            : <button className="text-sm bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-full px-3 py-1">Following</button>
+            ? <button className="text-emerald-600 text-xs border rounded-full px-3 py-1 hover:bg-neutral-100">
+                Follow
+            </button>
+            : <button
+                className="text-white bg-emerald-500 text-xs w-20 rounded-full py-1 hover:bg-emerald-600">
+                Following
+            </button>
     )
 }
 export default FollowBtn

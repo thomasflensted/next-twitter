@@ -1,5 +1,5 @@
-import ColumnHeading from "@/app/ui/global/ColumnHeading"
-import Tweets from "@/app/ui/tweet/Tweets"
+import ColumnHeading from "@/app/ui/global/columns/ColumnHeading"
+import Tweets from "@/app/ui/tweet/FeedTweets"
 
 
 const page = () => {

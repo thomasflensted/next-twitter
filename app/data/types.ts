@@ -3,7 +3,9 @@ export type Tweet = {
     content: string,
     location: string,
     created_at: string,
-    updated_at: string
+    name: string,
+    handle: string,
+    image: string | null,
 };
 
 export type NewTweet = Omit<Tweet, 'id'>;

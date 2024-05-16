@@ -1,9 +1,9 @@
 'use client'
 
-import { ChangeEvent, Dispatch, SetStateAction, useRef } from "react"
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef } from "react"
 import { FaRegImage } from "react-icons/fa6"
 
-const ImagePicker = ({ setImage }: { setImage: Dispatch<SetStateAction<File | null>> }) => {
+const ImagePicker = ({ image, setImage }: { image: File | null, setImage: Dispatch<SetStateAction<File | null>> }) => {
 
     const imageRef = useRef<any>(null)
 
@@ -12,6 +12,10 @@ const ImagePicker = ({ setImage }: { setImage: Dispatch<SetStateAction<File | nu
             setImage(e.target.files[0]);
         }
     }
+
+    useEffect(() => {
+        if (!image) imageRef.current.value = null;
+    }, [image])
 
     return (
         <div className="">

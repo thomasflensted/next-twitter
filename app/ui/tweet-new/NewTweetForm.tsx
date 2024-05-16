@@ -3,7 +3,7 @@
 import TextField from "./TextField"
 import OptionsBar from "./OptionsBar"
 import SubmitBtn from "./SubmitBtn"
-import { SetStateAction, createContext, useState } from "react"
+import { SetStateAction, createContext, useRef, useState } from "react"
 import NewTweetImage from "./NewTweetImage"
 import { postTweet } from "@/app/data/actions/tweetActions"
 
@@ -14,18 +14,24 @@ type ContextType = {
 
 export const TextContext = createContext<ContextType | null>(null);
 
-const NewTweetForm = () => {
+const NewTweetForm = ({ userId }: { userId: number }) => {
 
     const [text, setText] = useState('');
     const [image, setImage] = useState<File | null>(null);
-    const [location, setLocation] = useState<string | undefined>(undefined);
+
+    const postTweetWithUserId = postTweet.bind(null, userId);
+
+    const handleSubmit = async () => {
+        setText('')
+        setImage(null);
+    }
 
     return (
         <TextContext.Provider value={{ text, setText }}>
             <form
                 name="tweetform"
-                onSubmit={() => setText('')}
-                action={postTweet}
+                onSubmit={handleSubmit}
+                action={postTweetWithUserId}
                 className="h-full w-full flex flex-col p-4">
                 <TextField text={text} setText={setText} />
                 <NewTweetImage image={image} setImage={setImage} />

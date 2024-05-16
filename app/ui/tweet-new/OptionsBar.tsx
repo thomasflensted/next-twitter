@@ -11,9 +11,9 @@ const OptionsBar = ({ image, setImage }: { image: File | null, setImage: Dispatc
     return (
         <div className="flex gap-4  flex-grow items-center">
             <ImproveWithAI />
-            <ImagePicker setImage={setImage} />
+            <ImagePicker image={image} setImage={setImage} />
             <EmojiPicker />
-            <LocationPicker />
+            {/* <LocationPicker /> */}
         </div>
     )
 }
