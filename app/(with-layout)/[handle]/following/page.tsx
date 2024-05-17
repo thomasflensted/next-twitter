@@ -6,7 +6,7 @@ const page = ({ params }: { params: { id: string } }) => {
 
     return (
         <>
-            <BackHeader returnUrl={`/${params.id}`} text="Account" />
+            <BackHeader />
             <ColumnHeading text={`${params.id}'s following`} />
             <AccountRow />
             <AccountRow />
