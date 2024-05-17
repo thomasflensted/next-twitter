@@ -3,7 +3,7 @@ import AccountRow from "@/app/ui/follower-following-list/AccountRow";
 import BackHeader from "@/app/ui/global/BackHeader"
 import ColumnHeading from "@/app/ui/global/columns/ColumnHeading";
 
-export async function Page({ params }: { params: { handle: string } }) {
+export default async function Page({ params }: { params: { handle: string } }) {
 
     const follows = await getUserFollows(params.handle);
     const headingText = follows.length === 0 ? `${params.handle} doesn't follow anybody.` : `${params.handle} follows:`
@@ -22,4 +22,3 @@ export async function Page({ params }: { params: { handle: string } }) {
         </>
     )
 }
-export default Page
