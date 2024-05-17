@@ -6,7 +6,7 @@ const page = () => {
     return (
         <div>
             <ColumnHeading text="Your Bookmarks" />
-            <Tweets />
+            {/* <Tweets /> */}
         </div>
     )
 }
