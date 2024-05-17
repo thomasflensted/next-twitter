@@ -8,7 +8,6 @@ export async function postTweet(userId: number, formData: FormData) {
 
     const content = formData.get('content');
     const image = formData.get('image');
-    console.log({ image });
     if (!content) return;
 
     const s3url = image && image instanceof File ? await uploadImageToS3(image) : null;

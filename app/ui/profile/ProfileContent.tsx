@@ -22,7 +22,7 @@ export async function ProfileContent({ handle }: { handle: string }) {
             <div className="flex justify-between">
                 <FollowCounts handle={profile.handle} />
                 {isOwnProfile && <EditAndLogoutBtns />}
-                {!isOwnProfile && <FollowBtn isFollowingUser={isFollowingUser} />}
+                {!isOwnProfile && <FollowBtn handle={profile.handle} isFollowingUser={isFollowingUser} />}
             </div>
         </div>
     )
