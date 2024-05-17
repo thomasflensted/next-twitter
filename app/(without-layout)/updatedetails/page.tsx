@@ -1,17 +1,14 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import DetailsForm from "@/app/ui/update-details/DetailsForm";
-import { userHasUpdatedDetails } from "@/app/data/userData";
+import { getUserProfile } from "@/app/data/userData";
 
 export default async function Page() {
 
     const { getUser } = getKindeServerSession();
-
     const user = await getUser();
     if (!user) redirect('/signin')
-
-    const userHasDetails = await userHasUpdatedDetails(user.id);
-    if (userHasDetails) redirect('/');
+    const profile = await getUserProfile();
 
     const handlePlaceholder = user.email?.split('@')[0];
     const namePlaceHolder = user.given_name + ' ' + user.family_name;
