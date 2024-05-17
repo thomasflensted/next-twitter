@@ -1,16 +1,25 @@
-import AccountRow from "@/app/ui/follower-following-list/AccountRow"
+import { getUserFollowers } from "@/app/data/userData";
+import AccountRow from "@/app/ui/follower-following-list/AccountRow";
 import BackHeader from "@/app/ui/global/BackHeader"
-import ColumnHeading from "@/app/ui/global/columns/ColumnHeading"
+import ColumnHeading from "@/app/ui/global/columns/ColumnHeading";
 
-const page = ({ params }: { params: { id: string } }) => {
+export async function Page({ params }: { params: { handle: string } }) {
+
+    const follows = await getUserFollowers(params.handle);
+    const headingText = follows.length === 0 ? `${params.handle} is not followed by anybody` : `These users follow ${params.handle}:`
+
     return (
         <>
             <BackHeader />
-            <ColumnHeading text={`${params.id}'s followers`} />
-            <AccountRow />
-            <AccountRow />
-            <AccountRow />
+            <ColumnHeading text={headingText} />
+            {follows.map(user =>
+                <AccountRow
+                    key={user.id}
+                    name={user.name}
+                    handle={user.handle}
+                    bio={user.bio} />
+            )}
         </>
     )
 }
-export default page
+export default Page

@@ -24,9 +24,6 @@ export const TweetSkeleton = () => {
 export const MultipleTweetsSkeleton = () => {
     return (
         <>
-            <div className="animate-pulse border-b border-gray-200 dark:border-neutral-700 flex justify-center">
-                <h2 className="my-2 font-medium text-sm">Getting Tweets...</h2>
-            </div>
             <TweetSkeleton />
             <TweetSkeleton />
             <TweetSkeleton />

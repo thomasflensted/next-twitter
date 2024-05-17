@@ -1,17 +1,25 @@
+import { getUserFollows } from "@/app/data/userData";
 import AccountRow from "@/app/ui/follower-following-list/AccountRow";
 import BackHeader from "@/app/ui/global/BackHeader"
 import ColumnHeading from "@/app/ui/global/columns/ColumnHeading";
 
-const page = ({ params }: { params: { id: string } }) => {
+export async function Page({ params }: { params: { handle: string } }) {
+
+    const follows = await getUserFollows(params.handle);
+    const headingText = follows.length === 0 ? `${params.handle} doesn't follow anybody.` : `${params.handle} follows:`
 
     return (
         <>
             <BackHeader />
-            <ColumnHeading text={`${params.id}'s following`} />
-            <AccountRow />
-            <AccountRow />
-            <AccountRow />
+            <ColumnHeading text={headingText} />
+            {follows.map(user =>
+                <AccountRow
+                    key={user.id}
+                    name={user.name}
+                    handle={user.handle}
+                    bio={user.bio} />
+            )}
         </>
     )
 }
-export default page
+export default Page

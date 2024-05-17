@@ -6,10 +6,11 @@ type Props = {
     date: string,
     name: string,
     handle?: string,
-    imageUrl: string | null
+    imageUrl: string | null,
+    isOwnTweet: boolean,
 }
 
-const TweetAccountRow = ({ tweet_id, date, name, handle, imageUrl }: Props) => {
+const TweetAccountRow = ({ tweet_id, date, name, handle, imageUrl, isOwnTweet }: Props) => {
 
     const formattedDate = new Date(date).toDateString();
 
@@ -29,7 +30,7 @@ const TweetAccountRow = ({ tweet_id, date, name, handle, imageUrl }: Props) => {
                     <h3 className="text-xs font-light text-gray-400 dark:text-gray-300">{formattedDate}</h3>
                 </Link>
             </div>
-            <DeleteTweetBtn imageUrl={imageUrl} id={tweet_id} />
+            {isOwnTweet && <DeleteTweetBtn imageUrl={imageUrl} id={tweet_id} />}
         </div>
     )
 }

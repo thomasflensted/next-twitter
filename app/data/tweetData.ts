@@ -3,29 +3,45 @@
 import { db } from "./db";
 import { Tweet } from "./types";
 
-export async function getTweets(): Promise<Tweet[]> {
+export async function getTweets(userId: number): Promise<Tweet[]> {
     try {
-        const res = await db.query(`
-            SELECT tweets.id, tweets.content, tweets.location, tweets.created_at, tweets.image, profile.name, profile.handle
-            FROM tweets
-            JOIN profile ON tweets.user_id = profile.id
-            ORDER BY tweets.created_at DESC;`);
-        return res.rows;
+        const tweets = await db.query(`
+
+        SELECT p.name, p.handle, t.content, t.created_at, t.image, t.location, t.id, 
+        CASE WHEN f.user_id = p.id THEN TRUE ELSE FALSE END AS is_own_tweet
+        FROM follows f
+        JOIN tweets t ON f.following = t.user_id
+        JOIN profile p ON f.following = p.id
+        WHERE f.user_id = ${userId}
+
+        UNION   
+
+        SELECT p.name, p.handle, t.content, t.created_at, t.image, t.location, t.id, TRUE AS is_own_tweet
+        FROM profile p
+        JOIN tweets t ON p.id = t.user_id
+        WHERE p.id = ${userId}
+
+        ORDER BY created_at DESC;
+        
+        `).then(res => res.rows);
+        return tweets;
     } catch (error) {
         console.log('Database Error:', error);
         throw Error('Failed to get tweets.');
     }
 }
 
-export async function getTweetsByUser(handle: string): Promise<Tweet[]> {
+export async function getTweetsByUser(ownHandle: string, handle: string): Promise<Tweet[]> {
     try {
-        const res = await db.query(`
-            SELECT tweets.id, tweets.content, tweets.location, tweets.created_at, tweets.image, profile.name
-            FROM tweets
-            JOIN profile on tweets.user_id = profile.id
-            WHERE profile.handle = '${handle}'
-            ORDER BY tweets.created_at DESC;`);
-        return res.rows;
+        const tweets = await db.query(`
+            SELECT p.name, p.handle, t.content, t.created_at, t.image, t.location, t.id, 
+            CASE WHEN p.handle = '${ownHandle}' THEN TRUE ELSE FALSE END AS is_own_tweet
+            FROM profile p
+            JOIN tweets t ON p.id = t.user_id
+            WHERE p.handle = '${handle}'
+            ORDER BY created_at DESC;
+            `).then(res => res.rows);
+        return tweets;
     } catch (error) {
         console.log('Database Error:', error);
         throw Error('Failed to get tweets.');

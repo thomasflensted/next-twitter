@@ -1,15 +1,20 @@
+import Link from "next/link";
+import NameAndHandle from "../profile/NameAndHandle";
 import FollowBtn from "./FollowBtn";
-import NameAndHandle from "./NameAndHandle";
 
-const AccountRow = () => {
+const AccountRow = ({ name, handle, bio }: { name: string, handle: string, bio: string }) => {
 
     return (
         <div className="flex px-6 py-3 border-b flex-col">
             <div className="flex justify-between items-center">
-                <NameAndHandle />
-                <FollowBtn />
+                <Link href={'/' + handle}>
+                    <NameAndHandle name={name} handle={handle} />
+                </Link>
+                <FollowBtn isFollowingUser={true} />
             </div>
-            <p className="font-light text-xs mt-2">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nulla quisquam tempore similique praesentium alias animi commodi esse ipsa et cumque?</p>
+            <p className="font-light text-xs mt-2">
+                {bio}
+            </p>
         </div>
     )
 }

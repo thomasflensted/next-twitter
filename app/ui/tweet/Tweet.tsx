@@ -7,11 +7,13 @@ import ProfilePicColumn from "./ProfilePicColumn"
 import TweetImage from "./TweetImage"
 
 const TweetComponent = ({ tweet }: { tweet: Tweet }) => {
+
     return (
         <TweetContainer>
-            <ProfilePicColumn />
+            <ProfilePicColumn handle={tweet.handle} />
             <div className="h-full w-full flex flex-col pt-4 pr-6">
                 <TweetAccountRow
+                    isOwnTweet={tweet.is_own_tweet}
                     imageUrl={tweet.image}
                     name={tweet.name}
                     handle={tweet.handle}
@@ -19,7 +21,7 @@ const TweetComponent = ({ tweet }: { tweet: Tweet }) => {
                     tweet_id={tweet.id} />
                 <TweetContent content={tweet.content} />
                 {tweet.image && <TweetImage imageUrl={tweet.image.split('?')[0]} />}
-                <TweetOptions location={tweet.location} />
+                <TweetOptions isOwnTweet={tweet.is_own_tweet} location={tweet.location} />
             </div>
         </TweetContainer>
     )
