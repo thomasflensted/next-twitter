@@ -10,6 +10,7 @@ export default async function UserTweets({ handle }: { handle: string }) {
     return (
         <> {tweets.map(tweet =>
             <TweetComponent
+                userId={profile.id}
                 key={tweet.id}
                 tweet={tweet}
             />)}
