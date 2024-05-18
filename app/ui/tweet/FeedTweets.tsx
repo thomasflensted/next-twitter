@@ -1,4 +1,4 @@
-import { getTweets, getTweetsByUser } from "@/app/data/tweetData";
+import { getTweets } from "@/app/data/tweetData";
 import TweetComponent from "./Tweet"
 
 export default async function FeedTweets({ userId }: { userId: number }) {
@@ -8,6 +8,7 @@ export default async function FeedTweets({ userId }: { userId: number }) {
     return (
         <> {tweets.map(tweet =>
             <TweetComponent
+                userId={userId}
                 key={tweet.id}
                 tweet={tweet}
             />)}

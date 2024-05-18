@@ -1,7 +1,18 @@
-import { FaRegHeart, FaRegBookmark } from "react-icons/fa";
+import { FaRegHeart, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { FaMapPin } from "react-icons/fa6";
+import BookmarkBtn from "./BookmarkBtn";
+import LikeBtn from "./LikeBtn";
 
-const TweetOptions = ({ location, isOwnTweet }: { location: string, isOwnTweet: boolean }) => {
+type Props = {
+    tweetId: number,
+    location: string,
+    isOwnTweet: boolean,
+    isBookmarked: boolean,
+    userId: number,
+    isLiked: boolean,
+}
+
+const TweetOptions = ({ tweetId, location, isOwnTweet, isBookmarked, userId, isLiked }: Props) => {
 
     return (
         <div className="w-full flex pb-4 justify-between">
@@ -12,8 +23,8 @@ const TweetOptions = ({ location, isOwnTweet }: { location: string, isOwnTweet: 
                 </>}
             </div>
             {!isOwnTweet && <div className="flex gap-4">
-                <FaRegHeart className="text-emerald-500 text-md cursor-pointer hover:text-emerald-600" />
-                <FaRegBookmark className="text-emerald-500 text-md cursor-pointer hover:text-emerald-600" />
+                <LikeBtn userId={userId} tweetId={tweetId} initialState={isLiked} />
+                <BookmarkBtn userId={userId} tweetId={tweetId} initialState={isBookmarked} />
             </div>}
         </div>
     )

@@ -1,13 +1,22 @@
+import { getBookMarkedTweets } from "@/app/data/tweetData";
+import { getUserProfile } from "@/app/data/userData"
 import ColumnHeading from "@/app/ui/global/columns/ColumnHeading"
-import Tweets from "@/app/ui/tweet/FeedTweets"
+import TweetComponent from "@/app/ui/tweet/Tweet";
 
+export default async function Page() {
 
-const page = () => {
+    const { id } = await getUserProfile();
+    const bookmarkedTweets = await getBookMarkedTweets(id)
+
     return (
         <div>
             <ColumnHeading text="Your Bookmarks" />
-            {/* <Tweets /> */}
+            {bookmarkedTweets.map(tweet =>
+                <TweetComponent
+                    userId={id}
+                    key={tweet.id}
+                    tweet={tweet}
+                />)}
         </div>
     )
 }
-export default page

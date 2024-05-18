@@ -6,7 +6,7 @@ import { Tweet } from "@/app/data/types"
 import ProfilePicColumn from "./ProfilePicColumn"
 import TweetImage from "./TweetImage"
 
-const TweetComponent = ({ tweet }: { tweet: Tweet }) => {
+const TweetComponent = ({ tweet, userId }: { tweet: Tweet, userId: number }) => {
 
     return (
         <TweetContainer>
@@ -21,7 +21,13 @@ const TweetComponent = ({ tweet }: { tweet: Tweet }) => {
                     tweet_id={tweet.id} />
                 <TweetContent content={tweet.content} />
                 {tweet.image && <TweetImage imageUrl={tweet.image.split('?')[0]} />}
-                <TweetOptions isOwnTweet={tweet.is_own_tweet} location={tweet.location} />
+                <TweetOptions
+                    isLiked={tweet.is_liked}
+                    userId={userId}
+                    tweetId={tweet.id}
+                    isBookmarked={tweet.is_bookmarked}
+                    isOwnTweet={tweet.is_own_tweet}
+                    location={tweet.location} />
             </div>
         </TweetContainer>
     )

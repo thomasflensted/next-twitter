@@ -6,7 +6,9 @@ export type Tweet = {
     name: string,
     handle: string,
     image: string | null,
-    is_own_tweet: boolean
+    is_own_tweet: boolean,
+    is_bookmarked: boolean,
+    is_liked: boolean
 };
 
 export type NewTweet = Omit<Tweet, 'id'>;
