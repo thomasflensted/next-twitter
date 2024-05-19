@@ -12,7 +12,7 @@ export default async function Page({ params }: { params: { id: number } }) {
 
     return (
         <div>
-            <BackHeader />
+            <BackHeader href="/" />
             <TweetComponent userId={id} tweet={tweet} />
         </div>
     )

@@ -8,7 +8,7 @@ const SubmitDetailsBtn = () => {
     return (
         <button
             disabled={pending}
-            className="disabled:text-gray-300 border py-1 text-sm text-emerald-600 rounded hover:bg-gray-100">
+            className="disabled:text-gray-300 border py-1 text-sm text-emerald-600 rounded hover:bg-gray-100 w-full">
             Save Details
         </button>
     )
