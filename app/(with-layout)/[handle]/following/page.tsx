@@ -11,7 +11,7 @@ export default async function Page({ params }: { params: { handle: string } }) {
 
     return (
         <>
-            <BackHeader />
+            <BackHeader href="/handle" />
             <ColumnHeading text={headingText} />
             {follows.map(user =>
                 <AccountRow
