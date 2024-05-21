@@ -13,8 +13,8 @@ export default async function UserTweets({ ownHandle, id, handle, isOwnAccount }
     return (
         <> {tweets.map(tweet =>
             <TweetComponent
-                userId={id}
                 key={tweet.id}
+                loggedInUser={id}
                 tweet={tweet}
             />)}
         </>

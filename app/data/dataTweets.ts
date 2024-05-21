@@ -40,11 +40,11 @@ export async function getTweets(userId: number): Promise<TweetWithAdditionalData
     }
 }
 
-export async function getTweetsByUser(ownHandle: string, handle: string): Promise<Tweet[]> {
+export async function getTweetsByUser(ownHandle: string, handle: string): Promise<TweetWithAdditionalData[]> {
     try {
         const tweets = await db.query(`
             SELECT
-                p.name AS author_name, p.handle AS author_handle, t.content, t.created_at, t.image, t.location, t.id,
+                p.name AS author_name, p.handle AS author_handle, t.*,
                 CASE WHEN l.user_id IS NOT NULL THEN TRUE ELSE FALSE END AS is_liked,
                 CASE WHEN b.user_id IS NOT NULL THEN TRUE ELSE FALSE END AS is_bookmarked
             FROM
