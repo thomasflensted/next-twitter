@@ -4,7 +4,7 @@ import { followUser, unfollowUser } from "@/app/data/actions/userActions";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-const FollowBtn = ({ isFollowingUser, handle }: { isFollowingUser: boolean | null, handle: string }) => {
+const FollowBtn = ({ isFollowingUser, handle, ownId }: { isFollowingUser: boolean | null, handle: string, ownId: number }) => {
 
     const p = usePathname();
 
@@ -12,12 +12,12 @@ const FollowBtn = ({ isFollowingUser, handle }: { isFollowingUser: boolean | nul
 
     const follow = async () => {
         setIsFollowing(true)
-        await followUser(handle, p);
+        await followUser(handle, ownId, p);
     }
 
     const unfollow = async () => {
         setIsFollowing(false)
-        await unfollowUser(handle, p);
+        await unfollowUser(handle, ownId, p);
     }
 
     return (

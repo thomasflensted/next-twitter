@@ -2,7 +2,7 @@ import { IoPerson } from "react-icons/io5"
 import NavItem from "./NavItem"
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
-import { getProfileFromId } from "@/app/data/userData";
+import { getProfileFromId } from "@/app/data/dataUser";
 
 export default async function ProfileNav() {
 

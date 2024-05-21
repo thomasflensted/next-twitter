@@ -37,9 +37,12 @@ export async function unBookmarkTweet(userId: number, tweetId: number) {
 }
 
 export async function likeTweet(userId: number, tweetId: number) {
-    await db.query(`INSERT INTO likes (user_id, liked_tweet) VALUES (${userId}, ${tweetId});`)
+    await db.query(`INSERT INTO likes (user_id, liked_tweet) VALUES (${userId}, ${tweetId});`);
+    revalidatePath('/');
 }
 
 export async function unLikeTweet(userId: number, tweetId: number) {
     await db.query(`DELETE FROM likes WHERE user_id = ${userId} AND liked_tweet = ${tweetId};`)
+    // revalidatePath('/tweet/' + tweetId);
+    revalidatePath('/');
 }

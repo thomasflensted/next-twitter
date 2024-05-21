@@ -1,13 +1,16 @@
 import NewTweetContainer from "./NewTweetContainer"
 import NewTweetForm from "./NewTweetForm"
 import ProfilePicColumn from "../tweet/ProfilePicColumn"
+import { getUserProfile } from "@/app/data/dataUser"
 
-const NewTweet = ({ userId }: { userId: number }) => {
+export default async function NewTweet({ kindeId }: { kindeId: string }) {
+
+    const { id } = await getUserProfile(kindeId)
+
     return (
         <NewTweetContainer>
             <ProfilePicColumn />
-            <NewTweetForm userId={userId} />
+            <NewTweetForm userId={id} />
         </NewTweetContainer>
     )
 }
-export default NewTweet

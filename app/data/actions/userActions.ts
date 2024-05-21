@@ -1,7 +1,7 @@
 'use server'
 import { redirect } from "next/navigation";
 import { db } from "../db";
-import { getUserProfile } from "../userData";
+import { getUserProfile } from "../dataUser";
 import { revalidatePath } from "next/cache";
 
 export async function setUserDetails(kindeId: string, formData: FormData) {
@@ -18,17 +18,15 @@ export async function setUserDetails(kindeId: string, formData: FormData) {
     redirect('/')
 }
 
-export async function unfollowUser(userHandle: string, path: string) {
-    const { id } = await getUserProfile();
+export async function unfollowUser(userHandle: string, ownId: number, path: string) {
     const otherUserId = await db.query(`SELECT id FROM profile WHERE handle ='${userHandle}';`).then(res => res.rows[0].id);
-    await db.query(`DELETE FROM follows WHERE user_id = ${id} AND following = ${otherUserId};`);
+    await db.query(`DELETE FROM follows WHERE user_id = ${ownId} AND following = ${otherUserId};`);
     revalidatePath(path);
 }
 
-export async function followUser(userHandle: string, path: string) {
-    const { id } = await getUserProfile();
+export async function followUser(userHandle: string, ownId: number, path: string) {
     const otherUserId = await db.query(`SELECT id FROM profile WHERE handle ='${userHandle}';`).then(res => res.rows[0].id);
-    await db.query(`INSERT INTO follows (user_id, following) VALUES (${id}, ${otherUserId});`);
+    await db.query(`INSERT INTO follows (user_id, following) VALUES (${ownId}, ${otherUserId});`);
     revalidatePath(path);
 }
 

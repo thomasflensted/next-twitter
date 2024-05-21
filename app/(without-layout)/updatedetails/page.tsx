@@ -1,17 +1,15 @@
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import DetailsForm from "@/app/ui/update-details/DetailsForm";
-import { getUserProfile } from "@/app/data/userData";
+import { authenticateAndGetKindeProfile, getInitialUserProfile } from "@/app/data/dataUser";
 
 export default async function Page() {
 
-    const profile = await getUserProfile();
-    if (profile) redirect('/');
-    const { getUser } = getKindeServerSession();
-    const user = await getUser();
+    const user = await authenticateAndGetKindeProfile();
+    const profile = await getInitialUserProfile(user.id);
+    if (profile) redirect('/')
 
-    const handlePlaceholder = user!.email?.split('@')[0];
-    const namePlaceHolder = user!.given_name + ' ' + user!.family_name;
+    const handlePlaceholder = user.email?.split('@')[0];
+    const namePlaceHolder = user.given_name + ' ' + user.family_name;
 
     return (
         <div className="border p-6 rounded-md mt-6">

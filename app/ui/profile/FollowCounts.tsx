@@ -1,5 +1,4 @@
-
-import { getTotalFollows } from "@/app/data/userData"
+import { getTotalFollows } from "@/app/data/dataFollowers"
 import Link from "next/link"
 
 async function FollowCounts({ handle }: { handle: string }) {

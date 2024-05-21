@@ -1,18 +1,22 @@
-import { FaRegHeart, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { FaMapPin } from "react-icons/fa6";
 import BookmarkBtn from "./BookmarkBtn";
 import LikeBtn from "./LikeBtn";
 
 type Props = {
-    tweetId: number,
-    location: string,
-    isOwnTweet: boolean,
-    isBookmarked: boolean,
-    userId: number,
-    isLiked: boolean,
+    data: {
+        id: number,
+        location: string,
+        isOwnTweet: boolean,
+        isBookmarked: boolean,
+        userId: number,
+        isLiked: boolean
+    }
+    loggedInUser: number
 }
 
-const TweetOptions = ({ tweetId, location, isOwnTweet, isBookmarked, userId, isLiked }: Props) => {
+const TweetOptions = ({ data, loggedInUser }: Props) => {
+
+    const { location, isOwnTweet, id, isLiked, isBookmarked } = data;
 
     return (
         <div className="w-full flex pb-4 justify-between">
@@ -23,8 +27,8 @@ const TweetOptions = ({ tweetId, location, isOwnTweet, isBookmarked, userId, isL
                 </>}
             </div>
             {!isOwnTweet && <div className="flex gap-4">
-                <LikeBtn userId={userId} tweetId={tweetId} initialState={isLiked} />
-                <BookmarkBtn userId={userId} tweetId={tweetId} initialState={isBookmarked} />
+                <LikeBtn userId={loggedInUser} tweetId={id} initialState={isLiked} />
+                <BookmarkBtn userId={loggedInUser} tweetId={id} initialState={isBookmarked} />
             </div>}
         </div>
     )

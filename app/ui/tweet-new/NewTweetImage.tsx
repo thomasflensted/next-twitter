@@ -26,9 +26,12 @@ const NewTweetImage = ({ image, setImage }: Props) => {
             className="w-full h-auto rounded-lg overflow-hidden relative my-1"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}>
-            {isHovering && <IoCloseCircleSharp
-                onClick={() => setImage(null)}
-                className="text-white absolute top-2 left-2 text-2xl hover:scale-110 transition-transform ease-in" />}
+            {isHovering &&
+                <div className="p-1 bg-black rounded-full absolute top-2 left-2">
+                    <IoCloseCircleSharp
+                        onClick={() => setImage(null)}
+                        className="text-white  text-2xl hover:scale-110 transition-transform ease-in" />
+                </div>}
             <img
                 src={fileUrl}
                 alt="Uploaded image"

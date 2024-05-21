@@ -1,26 +1,20 @@
-import { getUserFollowers, getUserProfile } from "@/app/data/userData";
-import AccountRow from "@/app/ui/follower-following-list/AccountRow";
+import { authenticateAndGetKindeId } from "@/app/data/dataUser";
+import UserFollowings from "@/app/ui/follower-following-list/UserFollowings";
 import BackHeader from "@/app/ui/global/BackHeader"
-import ColumnHeading from "@/app/ui/global/columns/ColumnHeading";
+import { FollowerListSkeleton } from "@/app/ui/skeletons/skeletons";
+import { Suspense } from "react";
 
 export default async function Page({ params }: { params: { handle: string } }) {
 
-    const { handle } = await getUserProfile();
-    const follows = await getUserFollowers(params.handle);
-    const headingText = follows.length === 0 ? `${params.handle} is not followed by anybody` : `These users follow ${params.handle}:`
+    const { handle } = params;
+    const kindeId = await authenticateAndGetKindeId();
 
     return (
         <>
-            <BackHeader href="/handle" />
-            <ColumnHeading text={headingText} />
-            {follows.map(user =>
-                <AccountRow
-                    isMyself={handle === user.handle}
-                    key={user.id}
-                    name={user.name}
-                    handle={user.handle}
-                    bio={user.bio} />
-            )}
+            <BackHeader href={'/' + handle} />
+            <Suspense fallback={<FollowerListSkeleton />}>
+                <UserFollowings kindeId={kindeId} handle={handle} />
+            </Suspense>
         </>
     )
 }

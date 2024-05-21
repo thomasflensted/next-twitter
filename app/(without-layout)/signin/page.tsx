@@ -4,7 +4,7 @@ import { RegisterLink, LoginLink } from "@kinde-oss/kinde-auth-nextjs/components
 
 const page = () => {
 
-    const comingSoon = true;
+    const comingSoon = false;
 
     return !comingSoon
         ? (<div className="rounded-md bg-white border w-1/5 py-4 flex flex-col gap-2 px-5 items-center mt-10">

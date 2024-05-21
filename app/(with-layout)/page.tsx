@@ -2,17 +2,18 @@ import { Suspense } from "react";
 import NewTweet from "../ui/tweet-new/NewTweet";
 import Tweets from "../ui/tweet/FeedTweets";
 import { MultipleTweetsSkeleton } from "../ui/skeletons/skeletons";
-import { getUserProfile } from "../data/userData";
+import { authenticateAndGetKindeId } from "../data/dataUser";
+
 
 export default async function Home() {
 
-    const { id } = await getUserProfile();
+    const id = await authenticateAndGetKindeId();
 
     return (
         <>
-            <NewTweet userId={id} />
+            <NewTweet kindeId={id} />
             <Suspense fallback={<MultipleTweetsSkeleton />}>
-                <Tweets userId={id} />
+                <Tweets kindeId={id} />
             </Suspense>
         </>
     )

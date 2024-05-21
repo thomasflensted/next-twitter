@@ -1,22 +1,19 @@
-import { getBookMarkedTweets } from "@/app/data/tweetData";
-import { getUserProfile } from "@/app/data/userData"
+import { authenticateAndGetKindeId } from "@/app/data/dataUser";
+import Bookmarks from "@/app/ui/bookmarks/Bookmarks";
 import ColumnHeading from "@/app/ui/global/columns/ColumnHeading"
-import TweetComponent from "@/app/ui/tweet/Tweet";
+import { MultipleTweetsSkeleton } from "@/app/ui/skeletons/skeletons";
+import { Suspense } from "react";
 
 export default async function Page() {
 
-    const { id } = await getUserProfile();
-    const bookmarkedTweets = await getBookMarkedTweets(id)
+    const kindeId = await authenticateAndGetKindeId();
 
     return (
         <div>
             <ColumnHeading text="Your Bookmarks" />
-            {bookmarkedTweets.map(tweet =>
-                <TweetComponent
-                    userId={id}
-                    key={tweet.id}
-                    tweet={tweet}
-                />)}
+            <Suspense fallback={<MultipleTweetsSkeleton />}>
+                <Bookmarks kindeId={kindeId} />
+            </Suspense>
         </div>
     )
 }

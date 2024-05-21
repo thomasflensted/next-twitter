@@ -4,14 +4,13 @@ import FollowBtn from "../follower-following-list/FollowBtn";
 import FollowCounts from "./FollowCounts";
 import ProfileLocation from "./ProfileLocation";
 import ProfileWebsite from "./ProfileWebsite";
-import { doesUserFollowOtherUser, getProfileFromHandle, getUserProfile } from "@/app/data/userData";
+import { getProfileFromHandle } from "@/app/data/dataUser";
+import { doesUserFollowOtherUser } from "@/app/data/dataFollowers";
 
-export async function ProfileContent({ handle }: { handle: string }) {
+export async function ProfileContent({ handle, isOwnAccount, ownId }: { handle: string, isOwnAccount: boolean, ownId: number }) {
 
-    const ownProfile = await getUserProfile();
-    const profile = await getProfileFromHandle(handle);
-    const isOwnProfile = ownProfile.handle === profile.handle;
-    const isFollowingUser = isOwnProfile ? null : await doesUserFollowOtherUser(ownProfile.id, profile.id);
+    const profile = await getProfileFromHandle(handle)
+    const isFollowingUser = await doesUserFollowOtherUser(ownId, profile.id)
 
     return (
         <div className="py-5 px-5 flex flex-col gap-3 border-b">
@@ -21,8 +20,8 @@ export async function ProfileContent({ handle }: { handle: string }) {
             {profile.location && <ProfileLocation location={profile.location} />}
             <div className="flex justify-between">
                 <FollowCounts handle={profile.handle} />
-                {isOwnProfile && <EditAndLogoutBtns />}
-                {!isOwnProfile && <FollowBtn handle={profile.handle} isFollowingUser={isFollowingUser} />}
+                {isOwnAccount && <EditAndLogoutBtns />}
+                {!isOwnAccount && <FollowBtn handle={profile.handle} ownId={ownId} isFollowingUser={isFollowingUser} />}
             </div>
         </div>
     )

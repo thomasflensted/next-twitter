@@ -1,8 +1,11 @@
 import Link from "next/link";
 import NameAndHandle from "../profile/NameAndHandle";
 import FollowBtn from "./FollowBtn";
+import { Profile } from "@/app/data/types";
 
-const AccountRow = ({ name, handle, bio, isMyself }: { name: string, handle: string, bio: string, isMyself: boolean }) => {
+const AccountRow = ({ account, isMyself, ownId, isFollowingUser }: { account: Profile, isMyself: boolean, ownId: number, isFollowingUser: boolean }) => {
+
+    const { handle, name, bio } = account;
 
     return (
         <div className="flex px-6 py-3 border-b flex-col">
@@ -10,11 +13,9 @@ const AccountRow = ({ name, handle, bio, isMyself }: { name: string, handle: str
                 <Link href={'/' + handle}>
                     <NameAndHandle name={name} handle={handle} />
                 </Link>
-                {!isMyself && <FollowBtn handle={handle} isFollowingUser={true} />}
+                {!isMyself && <FollowBtn ownId={ownId} handle={handle} isFollowingUser={isFollowingUser} />}
             </div>
-            <p className="font-light text-xs mt-2">
-                {bio}
-            </p>
+            <p className="font-light text-xs mt-2">{bio}</p>
         </div>
     )
 }
