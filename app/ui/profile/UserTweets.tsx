@@ -5,7 +5,6 @@ import { NoTweetsMessageOtherProfile, NoTweetsMessageOwnProfile } from "./NoTwee
 export default async function UserTweets({ ownHandle, id, handle, isOwnAccount }: { handle: string, id: number, ownHandle: string, isOwnAccount: boolean }) {
 
     const tweets = await getTweetsByUser(ownHandle, handle)
-    console.log(handle);
 
     if (isOwnAccount && tweets.length === 0) return (<NoTweetsMessageOwnProfile />)
     if (!isOwnAccount && tweets.length === 0) return (<NoTweetsMessageOtherProfile handle={handle} />)

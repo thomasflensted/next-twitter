@@ -1,14 +1,14 @@
 'use server'
 
 import { db } from "./db";
-import { Tweet, TweetWithAdditionalData } from "./types";
+import { TweetWithAdditionalData } from "./types";
 
 export async function getTweets(userId: number): Promise<TweetWithAdditionalData[]> {
     try {
         const tweets = await db.query(`
 
         SELECT 
-            p.name AS author_name, p.handle AS author_handle, t.*,
+            p.name AS author_name, p.handle AS author_handle, p.profile_pic as author_profile_pic, t.*,
             CASE WHEN f.user_id = t.user_id THEN TRUE ELSE FALSE END AS is_own_tweet,
             CASE WHEN b.bookmarked_tweet IS NOT NULL THEN TRUE ELSE FALSE END AS is_bookmarked,
             CASE WHEN l.liked_tweet IS NOT NULL THEN TRUE ELSE FALSE END AS is_liked
@@ -22,7 +22,7 @@ export async function getTweets(userId: number): Promise<TweetWithAdditionalData
         UNION   
 
         SELECT 
-            p.name AS author_name, p.handle AS author_handle, t.*,
+            p.name AS author_name, p.handle AS author_handle, p.profile_pic as author_profile_pic, t.*,
             TRUE AS is_own_tweet, 
             FALSE AS is_bookmarked,
             FALSE AS is_liked
@@ -30,7 +30,7 @@ export async function getTweets(userId: number): Promise<TweetWithAdditionalData
         JOIN tweets t ON p.id = t.user_id
         WHERE p.id = ${userId}
 
-        ORDER BY created_at DESC;
+        ORDER BY created_at DESC, id DESC;
                 
         `).then(res => res.rows);
         return tweets;
@@ -44,9 +44,10 @@ export async function getTweetsByUser(ownHandle: string, handle: string): Promis
     try {
         const tweets = await db.query(`
             SELECT
-                p.name AS author_name, p.handle AS author_handle, t.*,
+                p.name AS author_name, p.handle AS author_handle, p.profile_pic AS author_profile_pic, t.*,
                 CASE WHEN l.user_id IS NOT NULL THEN TRUE ELSE FALSE END AS is_liked,
-                CASE WHEN b.user_id IS NOT NULL THEN TRUE ELSE FALSE END AS is_bookmarked
+                CASE WHEN b.user_id IS NOT NULL THEN TRUE ELSE FALSE END AS is_bookmarked,
+                CASE WHEN p.handle = '${ownHandle}' THEN TRUE ELSE FALSE END AS is_own_tweet
             FROM
                 profile p
                 JOIN tweets t ON p.id = t.user_id
@@ -66,7 +67,7 @@ export async function getTweetsByUser(ownHandle: string, handle: string): Promis
 export async function getTweetById(tweetId: number, userId: number): Promise<TweetWithAdditionalData> {
     try {
         const tweet = await db.query(`
-        SELECT t.*, p.handle AS author_handle, p.name AS author_name,
+        SELECT t.*, p.handle AS author_handle, p.name AS author_name, p.profile_pic AS author_profile_pic,
         CASE WHEN b.user_id IS NOT NULL THEN TRUE ELSE FALSE END AS is_bookmarked,
         CASE WHEN l.user_id IS NOT NULL THEN TRUE ELSE FALSE END AS is_liked,
         CASE WHEN ${userId} = t.user_id THEN TRUE ELSE FALSE END AS is_own_tweet
@@ -88,7 +89,7 @@ export async function getBookMarkedTweets(userId: number): Promise<TweetWithAddi
         const res = await db.query(`
 
         SELECT
-            p.name AS author_name, p.handle AS author_handle,
+            p.name AS author_name, p.handle AS author_handle, p.profile_pic AS author_profile_pic,
             t.content, t.created_at, t.image, t.location, t.id,
             FALSE AS is_own_tweet, TRUE AS is_bookmarked
         FROM bookmarks b

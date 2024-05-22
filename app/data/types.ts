@@ -11,9 +11,10 @@ export type Tweet = {
 export type TweetWithAdditionalData = Tweet & {
     author_name: string,
     author_handle: string,
+    author_profile_pic: string,
     is_own_tweet: boolean,
     is_bookmarked: boolean,
-    is_liked: boolean
+    is_liked: boolean,
 }
 
 export type NewTweet = Omit<Tweet, 'id'>;

@@ -5,7 +5,8 @@ import { getUserFollowers } from "@/app/data/dataFollowers";
 
 export default async function UserFollowings({ handle, kindeId }: { handle: string, kindeId: string }) {
 
-    const [profile, follows] = await Promise.all([getUserProfile(kindeId), getUserFollowers(handle)])
+    const profile = await getUserProfile(kindeId);
+    const follows = await getUserFollowers(handle, profile.id);
     const headingText = follows.length === 0 ? `${handle} is not followed by anybody` : `These users follow ${handle}:`
 
     return (

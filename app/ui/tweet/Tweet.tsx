@@ -28,7 +28,7 @@ const TweetComponent = ({ tweet, loggedInUser }: { tweet: TweetWithAdditionalDat
 
     return (
         <TweetContainer>
-            <ProfilePicColumn handle={tweet.author_handle} />
+            <ProfilePicColumn image={tweet.author_profile_pic} handle={tweet.author_handle} />
             <div className="h-full w-full flex flex-col pt-4 pr-6">
                 <TweetAccountRow data={accountRow} />
                 <TweetContent content={tweet.content} />

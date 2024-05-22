@@ -3,12 +3,17 @@
 import { revalidatePath } from "next/cache";
 import { db } from "../db";
 import { deleteImageFromS3, uploadImageToS3 } from "../s3Bucket";
+import { validateTweetData } from "./validation";
 
 export async function postTweet(userId: number, formData: FormData) {
 
-    const content = formData.get('content');
-    const image = formData.get('image');
+    const content = formData.get('content') as string;
+    const image = formData.get('image') as File;
+
     if (!content) return;
+
+    // const validationResult = validateTweetData(1, image);
+    // if (validationResult.failure) return (validationResult.errors);
 
     const s3url = image && image instanceof File ? await uploadImageToS3(image) : null;
     s3url
@@ -16,7 +21,10 @@ export async function postTweet(userId: number, formData: FormData) {
                         VALUES ('${userId}', '${content}', '${s3url.split('?')[0]}');`)
         : await db.query(`INSERT INTO tweets (content, user_id)
                         VALUES ('${content}', '${userId}');`);
+
     revalidatePath('/');
+
+    // return validationResult.succes;
 }
 
 export async function deleteTweet(imageUrl: string | null, id: number) {
@@ -43,6 +51,5 @@ export async function likeTweet(userId: number, tweetId: number) {
 
 export async function unLikeTweet(userId: number, tweetId: number) {
     await db.query(`DELETE FROM likes WHERE user_id = ${userId} AND liked_tweet = ${tweetId};`)
-    // revalidatePath('/tweet/' + tweetId);
     revalidatePath('/');
 }

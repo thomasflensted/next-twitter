@@ -45,13 +45,13 @@ export async function getProfileFromHandle(handle: string): Promise<Profile> {
     return profile;
 }
 
-export async function getProfileImages(handle: string) {
+export async function getProfileImages(handle: string): Promise<{ profile_pic: string, cover_photo: string }> {
     try {
         const images = await db.query(`
         SELECT profile_pic, cover_photo
         FROM profile
         WHERE handle = '${handle}'`)
-            .then(res => res.rows);
+            .then(res => res.rows[0]);
         return images;
     } catch (error) {
         console.log("Database error: ", error);

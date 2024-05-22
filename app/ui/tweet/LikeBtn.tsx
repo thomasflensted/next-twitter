@@ -8,8 +8,6 @@ const LikeBtn = ({ tweetId, initialState, userId }: { initialState: boolean, twe
 
     const [isLiked, setIsLiked] = useState(initialState);
 
-    console.log({ userId, tweetId })
-
     const bookmark = async () => {
         setIsLiked(true);
         await likeTweet(userId, tweetId);

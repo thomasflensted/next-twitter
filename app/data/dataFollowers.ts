@@ -30,14 +30,13 @@ export async function doesUserFollowOtherUser(ownId: number, userId: number): Pr
     }
 }
 
-export async function getUserFollowers(handle: string): Promise<Profile[]> {
+export async function getUserFollowers(handle: string, ownId: number): Promise<Profile[]> {
     try {
         const accounts = await db.query(`
         SELECT p2.*,
         CASE WHEN EXISTS 
-        (SELECT 1 FROM follows f2 WHERE f2.following = p2.id AND f2.user_id = p1.id)
-        THEN TRUE ELSE FALSE
-        END AS does_follow
+        (SELECT 1 FROM follows f2 WHERE f2.following = p2.id AND f2.user_id = ${ownId})
+        THEN TRUE ELSE FALSE END AS does_follow
         FROM profile p1
         JOIN follows f ON p1.id = f.following
         JOIN profile p2 ON f.user_id = p2.id
@@ -50,11 +49,13 @@ export async function getUserFollowers(handle: string): Promise<Profile[]> {
     }
 }
 
-export async function getUserFollowing(handle: string): Promise<Profile[]> {
+export async function getUserFollowing(handle: string, ownId: number): Promise<Profile[]> {
     try {
         const accounts = await db.query(`
         SELECT p2.*,
-        TRUE as does_follow
+        CASE WHEN EXISTS 
+        (SELECT 1 FROM follows f2 WHERE f2.user_id = ${ownId} AND f2.following = p2.id)
+        THEN TRUE ELSE FALSE END AS does_follow
         FROM profile p1
         JOIN follows f ON p1.id = f.user_id
         JOIN profile p2 ON f.following = p2.id
