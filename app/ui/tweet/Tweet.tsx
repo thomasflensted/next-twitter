@@ -32,7 +32,7 @@ const TweetComponent = ({ tweet, loggedInUser }: { tweet: TweetWithAdditionalDat
             <div className="h-full w-full flex flex-col pt-4 pr-6">
                 <TweetAccountRow data={accountRow} />
                 <TweetContent content={tweet.content} />
-                {tweet.image && <TweetImage imageUrl={tweet.image.split('?')[0]} />}
+                {tweet.image && <TweetImage imageUrl={tweet.image} />}
                 <TweetOptions loggedInUser={loggedInUser} data={optionsRow} />
             </div>
         </TweetContainer>

@@ -2,9 +2,9 @@
 
 import { DeleteObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { redirect } from "next/navigation";
 import crypto from 'crypto';
+import { authenticateAndGetKindeId, getProfileFromId } from "./dataUser";
+import { revalidatePath } from "next/cache";
 
 const s3 = new S3Client({
     region: process.env.AWS_BUCKET_REGION!,
@@ -15,19 +15,12 @@ const s3 = new S3Client({
 })
 
 const acceptedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-const maxSize = 1024 * 1024 * 10;
+const maxSize = 1024 * 1024 * 5;
 
 export async function getSignedURL(type: string, size: number, checksum: string) {
 
-    const { getUser } = getKindeServerSession();
-    const user = await getUser();
-    if (!user) {
-        redirect('/signin')
-    }
-
-    if (!acceptedTypes.includes(type) || size > maxSize) {
-        return null;
-    }
+    const kindeId = await authenticateAndGetKindeId();
+    const { id } = await getProfileFromId(kindeId)
 
     const generateFilename = (bytes = 32) => crypto.randomBytes(bytes).toString('hex');
 
@@ -38,12 +31,13 @@ export async function getSignedURL(type: string, size: number, checksum: string)
         ContentType: type,
         ChecksumSHA256: checksum,
         Metadata: {
-            userId: user.id
+            userId: id.toString()
         }
     })
 
     const signedUrl = await getSignedUrl(s3, putObjectCommand, { expiresIn: 60 })
-    return signedUrl;
+    if (!signedUrl) return { error: "Something went wrong." };
+    return { url: signedUrl }
 }
 
 const computeSHA256 = async (file: File) => {
@@ -57,22 +51,30 @@ const computeSHA256 = async (file: File) => {
 export async function uploadImageToS3(image: File) {
 
     const checksum = await computeSHA256(image);
-    const url = await getSignedURL(image.type, image.size, checksum);
-    if (!url) return null;
-    await fetch(url, {
+    const signedUrlResult = await getSignedURL(image.type, image.size, checksum);
+    if (!signedUrlResult.url) return null;
+
+    await fetch(signedUrlResult.url, {
         method: 'PUT',
         body: image,
         headers: {
             "Content-Type": 'image/jpeg'
         }
     })
-    return url;
+    return signedUrlResult;
 }
 
 export async function deleteImageFromS3(fileUrl: string) {
+
+    const kindeId = await authenticateAndGetKindeId();
+    const { handle } = await getProfileFromId(kindeId)
+
     const deleteObjectCommand = new DeleteObjectCommand({
         Bucket: process.env.AWS_BUCKET_NAME!,
         Key: fileUrl.split('/').pop()!
     })
     await s3.send(deleteObjectCommand)
+
+    revalidatePath('/' + handle);
+
 }

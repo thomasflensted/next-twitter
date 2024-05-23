@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import DetailsForm from "@/app/ui/update-details/DetailsForm";
+import DetailsForm from "@/app/ui/forms/DetailsForm";
 import { authenticateAndGetKindeProfile, getInitialUserProfile } from "@/app/data/dataUser";
 
 export default async function Page() {
@@ -16,8 +16,7 @@ export default async function Page() {
             <h2 className="text-emerald-600 font-medium text-md">We need some details before you continue</h2>
             <DetailsForm
                 handlePlaceholder={handlePlaceholder ? handlePlaceholder : ''}
-                namePlaceHolder={namePlaceHolder}
-                kindeId={user!.id} />
+                namePlaceHolder={namePlaceHolder} />
         </div>
     )
 }

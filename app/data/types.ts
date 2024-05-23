@@ -38,3 +38,26 @@ export type Follows = {
     following: number,
     followers: number
 };
+
+export type TweetValidationState = {
+    success?: string,
+    message?: string,
+    errors?: {
+        content?: string[];
+        image?: string[];
+    };
+}
+
+export type UserDetailsValidationState = {
+    success?: string,
+    message?: string,
+    errors?: {
+        name?: string[];
+        handle?: string[];
+        website?: string[];
+        location?: string[];
+        bio?: string[];
+        profilePic?: string[];
+        coverPhoto?: string[];
+    };
+}

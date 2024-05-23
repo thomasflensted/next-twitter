@@ -3,7 +3,7 @@
 import { IoMdHappy } from "react-icons/io"
 import EmojiPicker from 'emoji-picker-react';
 import { useContext, useState } from "react";
-import { TextContext } from "../NewTweetForm";
+import { TextContext } from "../../forms/NewTweetForm";
 
 const EmojiPickerComponent = () => {
 
@@ -25,7 +25,7 @@ const EmojiPickerComponent = () => {
                 onEmojiClick={(e) => handleEmojiClick(e.emoji)}
                 open={pickerIsVisible}
                 lazyLoadEmojis={true}
-                className="-translate-x-12 translate-y-2"
+                className="-translate-x-12 translate-y-2 z-10"
                 style={{ position: 'absolute' }}
                 width={400} />
         </div>

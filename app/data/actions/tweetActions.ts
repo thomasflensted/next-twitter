@@ -3,28 +3,37 @@
 import { revalidatePath } from "next/cache";
 import { db } from "../db";
 import { deleteImageFromS3, uploadImageToS3 } from "../s3Bucket";
-import { validateTweetData } from "./validation";
+import { TweetValidationForm } from "./validation";
+import { authenticateAndGetKindeId, getProfileFromId } from "../dataUser";
+import { TweetValidationState } from "../types";
 
-export async function postTweet(userId: number, formData: FormData) {
+
+export async function postTweet(prevState: TweetValidationState, formData: FormData): Promise<TweetValidationState> {
+
+    const kindeId = await authenticateAndGetKindeId();
+    const { id } = await getProfileFromId(kindeId)
 
     const content = formData.get('content') as string;
-    const image = formData.get('image') as File;
+    const initialImage = formData.get('image') as File;
+    const image = initialImage && initialImage.size === 0 && initialImage.name === 'undefined' ? undefined : initialImage;
 
-    if (!content) return;
+    const validationResult = TweetValidationForm.safeParse({ content, image })
+    if (!validationResult.success) return {
+        message: "Something went wrong",
+        errors: validationResult.error.flatten().fieldErrors
+    }
 
-    // const validationResult = validateTweetData(1, image);
-    // if (validationResult.failure) return (validationResult.errors);
+    const validatedData = validationResult.data;
+    const s3url = validatedData.image ? await uploadImageToS3(validatedData.image) : undefined;
 
-    const s3url = image && image instanceof File ? await uploadImageToS3(image) : null;
     s3url
         ? await db.query(`INSERT INTO tweets (user_id, content, image)
-                        VALUES ('${userId}', '${content}', '${s3url.split('?')[0]}');`)
+                        VALUES (${id}, '${content}', '${s3url.url.split('?')[0]}');`)
         : await db.query(`INSERT INTO tweets (content, user_id)
-                        VALUES ('${content}', '${userId}');`);
+                        VALUES ('${content}', ${id});`);
 
     revalidatePath('/');
-
-    // return validationResult.succes;
+    return { success: "Tweet was successfully posted." };
 }
 
 export async function deleteTweet(imageUrl: string | null, id: number) {

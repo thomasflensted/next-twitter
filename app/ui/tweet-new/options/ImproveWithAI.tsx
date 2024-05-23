@@ -2,7 +2,7 @@
 
 import { useContext, useState } from "react"
 import { BsStars } from "react-icons/bs"
-import { TextContext } from "../NewTweetForm"
+import { TextContext } from "../../forms/NewTweetForm"
 import * as Dropdown from '@radix-ui/react-dropdown-menu';
 import DropdownAI from "./DropdownAI"
 import { fixTextWithAI, improveWithAI, queryAI } from "@/app/data/actions/aiActions";

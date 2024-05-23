@@ -2,7 +2,7 @@
 
 import { useContext } from 'react'
 import { useFormStatus } from 'react-dom'
-import { TextContext } from './NewTweetForm'
+import { TextContext } from '../forms/NewTweetForm'
 
 const SubmitBtn = () => {
 
