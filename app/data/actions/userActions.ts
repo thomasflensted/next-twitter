@@ -1,4 +1,5 @@
 'use server'
+
 import { redirect } from "next/navigation";
 import { db } from "../db";
 import { authenticateAndGetKindeId, getProfileImages, getUserProfile } from "../dataUser";
@@ -6,6 +7,7 @@ import { revalidatePath } from "next/cache";
 import { UserDetailsValidationState } from "../types";
 import { FullProfileValidationForm, ProfileValidationForm } from "./validation";
 import { deleteImageFromS3, uploadImageToS3 } from "../s3Bucket";
+import { escapeSingleQuotes } from "@/app/lib/helpers";
 
 export async function setUserDetails(prevState: UserDetailsValidationState, formData: FormData): Promise<UserDetailsValidationState> {
 
@@ -23,9 +25,14 @@ export async function setUserDetails(prevState: UserDetailsValidationState, form
         errors: validationResponse.error.flatten().fieldErrors
     }
 
+
     const validatedData = validationResponse.data;
+    const websiteEscaped = escapeSingleQuotes(validatedData.website);
+    const locationEscaped = escapeSingleQuotes(validatedData.location);
+    const bioEscaped = escapeSingleQuotes(validatedData.bio);
+
     await db.query(`INSERT INTO profile (kinde_id, handle, name, location, bio, website)
-    VALUES ('${kindeId}', '${validatedData.handle}','${validatedData.name}','${validatedData.location}', '${validatedData.bio}', '${validatedData.website}')`)
+    VALUES ('${kindeId}', '${validatedData.handle}','${validatedData.name}','${locationEscaped}', '${bioEscaped}', '${websiteEscaped}')`)
 
     redirect('/')
 }
@@ -64,16 +71,21 @@ export async function updateUserDetails(prevState: UserDetailsValidationState, f
     }
 
     const validatedData = validationResponse.data;
+
     const profilePicS3url = validatedData.profilePic ? await uploadImageToS3(validatedData.profilePic) : undefined;
     const coverPhotoS3url = validatedData.coverPhoto ? await uploadImageToS3(validatedData.coverPhoto) : undefined;
+
+    const websiteEscaped = escapeSingleQuotes(validatedData.website);
+    const locationEscaped = escapeSingleQuotes(validatedData.location);
+    const bioEscaped = escapeSingleQuotes(validatedData.bio);
 
     await db.query(`
     UPDATE profile
     SET name = '${validatedData.name}', 
         handle = '${validatedData.handle}', 
-        website = '${validatedData.website}', 
-        location = '${validatedData.location}', 
-        bio = '${validatedData.bio}'
+        website = '${websiteEscaped}', 
+        location = '${locationEscaped}', 
+        bio = '${bioEscaped}'
     WHERE id = ${id}`)
 
     if (profilePicS3url) {
