@@ -1,3 +1,5 @@
+'use client'
+
 import { setUserDetails } from "@/app/data/actions/userActions"
 import LabelAndInput from "../update-details/LabelAndInput"
 import SubmitDetailsBtn from "../update-details/SubmitDetailsBtn"
