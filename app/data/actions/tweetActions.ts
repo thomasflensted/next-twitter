@@ -6,6 +6,7 @@ import { deleteImageFromS3, uploadImageToS3 } from "../s3Bucket";
 import { TweetValidationForm } from "./validation";
 import { authenticateAndGetKindeId, getProfileFromId } from "../dataUser";
 import { TweetValidationState } from "../types";
+import { escapeSingleQuotes } from "@/app/lib/helpers";
 
 
 export async function postTweet(prevState: TweetValidationState, formData: FormData): Promise<TweetValidationState> {
@@ -25,12 +26,13 @@ export async function postTweet(prevState: TweetValidationState, formData: FormD
 
     const validatedData = validationResult.data;
     const s3url = validatedData.image ? await uploadImageToS3(validatedData.image) : undefined;
+    const contentEscaped = escapeSingleQuotes(validatedData.content);
 
     s3url
         ? await db.query(`INSERT INTO tweets (user_id, content, image)
-                        VALUES (${id}, '${content}', '${s3url.url.split('?')[0]}');`)
+                        VALUES (${id}, '${contentEscaped}', '${s3url.url.split('?')[0]}');`)
         : await db.query(`INSERT INTO tweets (content, user_id)
-                        VALUES ('${content}', ${id});`);
+                        VALUES ('${contentEscaped}', ${id});`);
 
     revalidatePath('/');
     return { success: "Tweet was successfully posted." };
