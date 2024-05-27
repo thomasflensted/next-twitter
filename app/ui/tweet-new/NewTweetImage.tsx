@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { IoCloseCircleSharp } from "react-icons/io5";
 
@@ -23,11 +24,11 @@ const NewTweetImage = ({ image, setImage }: Props) => {
 
     return image && fileUrl ? (
         <div
-            className="w-full h-auto rounded-lg overflow-hidden relative my-1"
+            className="w-full h-auto rounded-lg overflow-hidden my-1 relative"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}>
             {isHovering &&
-                <div className="p-1 bg-black rounded-full absolute top-2 left-2">
+                <div className="p-1 bg-black rounded-full absolute top-2 left-2 opacity-75">
                     <IoCloseCircleSharp
                         onClick={() => setImage(null)}
                         className="text-white  text-2xl hover:scale-110 transition-transform ease-in" />

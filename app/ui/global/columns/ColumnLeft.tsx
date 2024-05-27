@@ -3,6 +3,7 @@ import ProfileNav from "../nav-items/ProfileNav";
 import HomeNav from "../nav-items/HomeNav";
 import BookmarksNav from "../nav-items/BookmarksNav";
 import Logo from "../Logo";
+import SuggestionsNav from "../nav-items/SuggestionsNav";
 
 const LeftColumn = () => {
     return (
@@ -12,6 +13,7 @@ const LeftColumn = () => {
                 <HomeNav />
                 <ProfileNav />
                 <BookmarksNav />
+                <SuggestionsNav />
                 <ThemeButton />
             </ul>
         </nav>

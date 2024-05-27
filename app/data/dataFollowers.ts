@@ -67,3 +67,19 @@ export async function getUserFollowing(handle: string, ownId: number): Promise<P
         throw new Error('Failed to get profile.')
     }
 }
+
+export async function getFollowSuggestions(ownId: number): Promise<Profile[]> {
+    try {
+        const suggestions = await db.query(`
+        SELECT p.*,
+        CASE WHEN f.user_id IS NOT NULL THEN TRUE ELSE FALSE END AS does_follow
+        FROM profile p
+        LEFT JOIN follows f ON p.id = f.following AND f.user_id = ${ownId}
+        ORDER BY p.id LIMIT 10;
+        `).then(res => res.rows);
+        return suggestions;
+    } catch (error) {
+        console.log("Database error: ", error);
+        throw new Error('Failed to get profile.')
+    }
+}

@@ -1,6 +1,7 @@
 import { getTweets } from "@/app/data/dataTweets";
 import TweetComponent from "./Tweet"
 import { getUserProfile } from "@/app/data/dataUser";
+import Link from "next/link";
 
 
 export default async function FeedTweets({ kindeId }: { kindeId: string }) {
@@ -17,8 +18,9 @@ export default async function FeedTweets({ kindeId }: { kindeId: string }) {
         )
 
     return (
-        <div className="font-medium text-emerald-600 text-center mx-auto">
-            <h1 className="my-4">Looks like you&apos;re now following anybody yet!</h1>
+        <div className=" text-emerald-600 text-center mx-auto flex flex-col gap-1.5">
+            <h1 className="mt-4 font-medium">Looks like you&apos;re not following anybody yet!</h1>
+            <p className="text-sm font-light">Find some suggestions <Link className="underline" href="/suggestions">here.</Link></p>
         </div>
     )
 }
