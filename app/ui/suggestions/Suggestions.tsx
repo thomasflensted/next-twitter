@@ -6,7 +6,6 @@ export async function Suggestions({ kindeId }: { kindeId: string }) {
 
     const { id } = await getUserProfile(kindeId);
     const suggestions = await getFollowSuggestions(id);
-    console.log(suggestions);
 
     return (
         <>
