@@ -11,6 +11,9 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  use: {
+    baseURL: process.env.BASE_URL || 'http://localhost:3000', // Fallback to a local dev server
+  },
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,

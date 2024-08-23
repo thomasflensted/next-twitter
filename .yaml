@@ -1,0 +1,21 @@
+# Example for GitHub Actions
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Build the site
+        run: npm run build
+      
+      - name: Start the site
+        run: npm start & # Start the server in the background
+      
+      - name: Run Playwright tests
+        run: npx playwright test
+        env:
+          BASE_URL: 'http://localhost:3080' # This points to your built PR site
