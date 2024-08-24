@@ -1,7 +1,5 @@
 name: Playwright Tests
 on:
-  push:
-    branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
 
@@ -19,7 +17,7 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Wait for Vercel Preview
-        uses: josephduffy/wait-for-vercel-preview@v1
+        uses: vercel/wait-for-vercel@v2
         id: waitForVercelPreview
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
