@@ -12,7 +12,7 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   use: {
-    baseURL: process.env.BASE_URL || 'http://localhost:3000', // Fallback to a local dev server
+    baseURL: process.env.PLAYWRIGHT_TEST_BASE_URL || 'http://localhost:3000',
   },
   testDir: './tests',
   /* Run tests in files in parallel */
