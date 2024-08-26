@@ -1,11 +1,11 @@
-import { authenticateAndGetKindeId, getUserProfile } from "@/app/data/dataUser";
+// import { authenticateAndGetKindeId, getUserProfile } from "@/app/data/dataUser";
 import { FollowerListSkeleton } from "@/app/ui/skeletons/skeletons";
 import { Suggestions } from "@/app/ui/suggestions/Suggestions";
 import { Suspense } from "react";
 
 export default async function Page() {
 
-    const kindeId = await authenticateAndGetKindeId();
+    // const kindeId = await authenticateAndGetKindeId();
 
     return (
         <div className="w-full">
@@ -13,7 +13,8 @@ export default async function Page() {
                 <h2 className="text-emerald-600 text-md">Here are some suggestions on people you can follow:</h2>
             </div>
             <Suspense fallback={<FollowerListSkeleton />}>
-                <Suggestions kindeId={kindeId} />
+                <div></div>
+                {/* <Suggestions kindeId={kindeId} /> */}
             </Suspense>
         </div>
     )
