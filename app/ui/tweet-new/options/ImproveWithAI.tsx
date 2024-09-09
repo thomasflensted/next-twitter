@@ -5,7 +5,8 @@ import { BsStars } from "react-icons/bs"
 import { TextContext } from "../../forms/NewTweetForm"
 import * as Dropdown from '@radix-ui/react-dropdown-menu';
 import DropdownAI from "./DropdownAI"
-import { fixTextWithAI, improveWithAI, queryAI } from "@/app/data/actions/aiActions";
+import { fixTextWithAI, improveWithAI, queryAI } from "@/app/lib/actions/aiActions";
+
 
 const ImproveWithAI = () => {
 

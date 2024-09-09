@@ -4,11 +4,11 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { Cross1Icon } from '@radix-ui/react-icons';
 import { useState } from 'react';
 
-const TweetImage = ({ imageUrl }: { imageUrl: string }) => {
+const TweetImage = ({ imageUrl }: { imageUrl: string | undefined | null }) => {
 
+    if (!imageUrl) return null;
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
-    console.log(imageUrl)
     return (
         <Dialog.Root open={dialogIsOpen}>
             <Dialog.Trigger onClick={() => setDialogIsOpen(true)} asChild>

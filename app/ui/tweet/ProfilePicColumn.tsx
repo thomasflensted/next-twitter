@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { RxAvatar } from "react-icons/rx"
 
-const ProfilePicColumn = ({ handle, image }: { handle: string, image: string }) => {
+const ProfilePicColumn = ({ handle, image }: { handle: string, image: string | undefined | null }) => {
 
     return (
         <Link href={'/' + handle} className="h-full w-1/6 flex flex-col items-center p-4">

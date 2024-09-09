@@ -1,21 +1,24 @@
 'use client'
 
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs"
+import { createClient } from "@/utils/supabase/client"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 
 const EditAndLogoutBtns = () => {
 
-    const p = usePathname();
+    const supabase = createClient()
+
+    const handleSignOut = async () => {
+        await supabase.auth.signOut();
+    }
 
     return (
         <div className="flex gap-1 items-center">
-            <Link href={`${p}/edit`} className="text-emerald-600 text-xs border rounded-full px-3 py-1 hover:bg-neutral-100">
+            <Link href={`account/edit`} className="text-emerald-600 text-xs border rounded-full px-3 py-1 hover:bg-neutral-100">
                 Edit profile
             </Link>
-            <LogoutLink className="text-red-600 text-xs border border-red-100 rounded-full px-3 py-1 hover:bg-red-50">
-                Log out
-            </LogoutLink>
+            <button onClick={handleSignOut} className="text-red-600 text-xs border border-red-100 rounded-full px-3 py-1 hover:bg-red-50">
+                Log Out
+            </button>
         </div>
     )
 }

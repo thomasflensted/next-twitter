@@ -1,17 +1,14 @@
-import { Profile } from "@/app/data/types"
 import AccountRow from "./AccountRow"
+import { ProfilePreview } from "@/app/lib/types"
 
-const FollowList = ({ accounts, handle, ownId }: { accounts: Profile[], handle: string, ownId: number }) => {
+const FollowList = ({ accounts }: { accounts: ProfilePreview[] }) => {
 
     return (
         <>
             {accounts.map(user =>
                 <AccountRow
-                    key={user.id}
-                    isFollowingUser={user.does_follow!}
-                    isMyself={handle === user.handle}
-                    account={user}
-                    ownId={ownId} />
+                    key={user.handle}
+                    profile={user} />
             )}
         </>
     )

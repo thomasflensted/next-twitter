@@ -1,15 +1,16 @@
-const ResponseMsg = ({ msg, success }: { msg: string, success: boolean }) => {
-    if (!success)
-        return (
-            <p className="text-red-500 text-xs font-light border border-red-400 rounded bg-red-50 py-1 px-2 mt-2">
+const ResponseMsg = ({ msg, error = false, paddingTop = 20 }: { msg: string, error?: boolean, paddingTop?: number }) => {
+    return !error ? (
+        <div style={{ paddingTop }}>
+            <p className="font-semibold text-emerald-600 text-center">
                 {msg}
             </p>
-        )
-    else {
-        return (
-            <p className="text-emerald-600 text-xs font-light border border-emerald-600 rounded bg-green-50 py-1 px-2 mt-2">
+        </div>
+    ) : (
+        <div style={{ paddingTop }}>
+            <p className="font-semibold text-red-600 text-center">
                 {msg}
-            </p>)
-    }
+            </p>
+        </div>
+    )
 }
 export default ResponseMsg

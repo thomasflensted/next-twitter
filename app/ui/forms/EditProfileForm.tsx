@@ -5,7 +5,7 @@ import LabelAndInput from "../update-details/LabelAndInput"
 import { useFormState } from "react-dom"
 import Link from "next/link"
 import SubmitDetailsBtn from "../update-details/SubmitDetailsBtn"
-import ResponseMsg from "../global/ResponseMsg"
+import ResponseMsg from "../global/FormResponseMsg"
 
 type Props = {
     name: string,

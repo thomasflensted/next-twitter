@@ -5,9 +5,10 @@ import OptionsBar from "../tweet-new/OptionsBar"
 import SubmitBtn from "../tweet-new/SubmitBtn"
 import { SetStateAction, createContext, useState } from "react"
 import NewTweetImage from "../tweet-new/NewTweetImage"
-import { postTweet } from "@/app/data/actions/tweetActions"
+
 import { useFormState } from "react-dom"
-import ResponseMsg from "../global/ResponseMsg"
+import ResponseMsg from "../global/FormResponseMsg"
+import { postTweet } from "@/app/lib/actions/tweets"
 
 type ContextType = {
     text: string,

@@ -4,7 +4,7 @@ import { setUserDetails } from "@/app/data/actions/userActions"
 import LabelAndInput from "../update-details/LabelAndInput"
 import SubmitDetailsBtn from "../update-details/SubmitDetailsBtn"
 import { useFormState } from "react-dom"
-import ResponseMsg from "../global/ResponseMsg"
+import ResponseMsg from "../global/FormResponseMsg"
 
 const DetailsForm = ({ handlePlaceholder, namePlaceHolder }: { handlePlaceholder: string, namePlaceHolder: string }) => {
 

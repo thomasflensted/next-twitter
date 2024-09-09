@@ -1,25 +1,44 @@
 import { Suspense } from "react";
 import ProfileImage from "./ProfileImage";
-import { MultipleTweetsSkeleton, ProfileImagesSkeleton, ProfileSkeleton } from "../skeletons/skeletons";
+import { MultipleTweetsSkeleton, ProfileSkeleton } from "../skeletons/skeletons";
 import { ProfileContent } from "./ProfileContent";
 import UserTweets from "./UserTweets";
-import { getUserProfile } from "@/app/data/dataUser";
+import { doesUserExist, getUserId } from "@/app/lib/api/users";
+import ResponseMsg from "../global/ResponseMsg";
+import BackHeader from "../global/BackHeader";
+import { PiSmileySad } from "react-icons/pi";
 
-async function Profile({ profileHandle, kindeId }: { profileHandle: string, kindeId: string }) {
+async function Profile({ handle }: { handle: string }) {
 
-    const { handle: ownHandle, id } = await getUserProfile(kindeId);
-    const isOwnAccount = ownHandle === profileHandle;
+    const [userId, { data, error }] = await Promise.all([
+        getUserId(), doesUserExist(handle)
+    ]);
+
+    if (error) {
+        return <ResponseMsg msg="An error occured." error />
+    }
+
+    if (!data) {
+        return <>
+            <BackHeader href="/" />
+            <PiSmileySad className="w-10 h-10 mx-auto mt-8 text-emerald-600" />
+            <ResponseMsg paddingTop={10} msg="User not found." />
+        </>
+    }
 
     return (
         <>
-            <Suspense fallback={<ProfileImagesSkeleton />}>
-                <ProfileImage handle={profileHandle} />
-            </Suspense>
             <Suspense fallback={<ProfileSkeleton />}>
-                <ProfileContent handle={profileHandle} isOwnAccount={isOwnAccount} ownId={id} />
+                <ProfileImage handle={handle} />
+                <ProfileContent
+                    handle={handle}
+                    userId={userId}
+                />
             </Suspense>
             <Suspense fallback={<MultipleTweetsSkeleton />}>
-                <UserTweets handle={profileHandle} ownHandle={ownHandle} id={id} isOwnAccount={isOwnAccount} />
+                <UserTweets
+                    handle={handle}
+                    userId={userId} />
             </Suspense>
         </>
     )

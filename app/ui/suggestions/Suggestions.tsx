@@ -1,22 +1,24 @@
-import { getFollowSuggestions } from "@/app/data/dataFollowers"
-import { getUserProfile } from "@/app/data/dataUser"
-import AccountRow from "../follower-following-list/AccountRow";
+import { createClient } from "@/utils/supabase/server";
+import { getUserId } from "@/app/lib/api/users";
+import ProfileRow from "../follower-following-list/AccountRow";
 
-export async function Suggestions({ kindeId }: { kindeId: string }) {
+export async function Suggestions() {
 
-    const { id } = await getUserProfile(kindeId);
-    const suggestions = await getFollowSuggestions(id);
+    const supabase = createClient()
+    const userId = await getUserId();
+    const { data, error } = await supabase
+        .rpc('get_suggestions', { current_user_id: userId })
+
+    if (!data || error || data.length === 0) {
+        return <p>Error.</p>
+    }
 
     return (
         <>
-            {suggestions.map(account =>
-                <AccountRow
-                    key={account.id}
-                    account={account}
-                    isMyself={false}
-                    ownId={id}
-                    isFollowingUser={account.does_follow!} />
-            )}
+            {data.map(profile =>
+                <ProfileRow
+                    key={profile.handle}
+                    profile={profile} />)}
         </>
     )
 }
