@@ -1,10 +1,11 @@
 'use client'
 
-import { login, SignInFormState } from "@/app/login/actions"
+
 import LabelAndInput from "./LabelAndInput"
 import PasswordVisibility from "./PasswordVisibility"
 import { useFormState } from "react-dom"
 import { useState } from "react"
+import { SignInFormState, login } from "@/app/lib/actions/authActions"
 
 const SignInForm = () => {
 
