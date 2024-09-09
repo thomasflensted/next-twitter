@@ -5,7 +5,6 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
 import { getUserId } from '../lib/api/users'
-import { PiAirplayThin } from 'react-icons/pi'
 import { queryAI } from '../lib/actions/aiActions'
 
 export type SignUpFormState = {

@@ -6,8 +6,9 @@ import { useState } from 'react';
 
 const TweetImage = ({ imageUrl }: { imageUrl: string | undefined | null }) => {
 
-    if (!imageUrl) return null;
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
+
+    if (!imageUrl) return null;
 
     return (
         <Dialog.Root open={dialogIsOpen}>

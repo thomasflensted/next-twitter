@@ -1,4 +1,3 @@
-import { createClient } from "@/utils/supabase/server";
 import ColumnHeading from "../global/columns/ColumnHeading";
 import FollowList from "./FollowList";
 import ResponseMsg from "../global/ResponseMsg";

@@ -1,5 +1,3 @@
-import { redirect } from "next/navigation";
-import DetailsForm from "@/app/ui/forms/DetailsForm";
 import LabelAndInput from "@/app/ui/login/LabelAndInput";
 import BackHeader from "@/app/ui/global/BackHeader";
 
