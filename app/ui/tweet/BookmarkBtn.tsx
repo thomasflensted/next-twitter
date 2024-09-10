@@ -1,21 +1,22 @@
 'use client'
 
-import { bookmarkTweet, unBookmarkTweet } from "@/app/data/actions/tweetActions";
+
+import { bookmarkTweet, unBookmarkTweet } from "@/app/lib/actions/tweets";
 import { useState } from "react"
 import { FaRegBookmark, FaBookmark } from "react-icons/fa6"
 
-const BookmarkBtn = ({ tweetId, initialState, userId }: { initialState: boolean, tweetId: number, userId: number }) => {
+const BookmarkBtn = ({ tweetId, initialState }: { initialState: boolean, tweetId: number }) => {
 
     const [isBookmarked, setIsBookmarked] = useState(initialState);
 
     const bookmark = async () => {
         setIsBookmarked(true);
-        await bookmarkTweet(userId, tweetId);
+        await bookmarkTweet(tweetId);
     }
 
     const unBookmark = async () => {
         setIsBookmarked(false);
-        await unBookmarkTweet(userId, tweetId)
+        await unBookmarkTweet(tweetId)
     }
 
     return isBookmarked

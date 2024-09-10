@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { IoCloseCircleSharp } from "react-icons/io5";
 

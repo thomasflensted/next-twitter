@@ -2,7 +2,8 @@
 
 import { HiDotsHorizontal } from "react-icons/hi";
 import * as Dropdown from '@radix-ui/react-dropdown-menu';
-import { deleteTweet } from "@/app/data/actions/tweetActions";
+import { deleteTweet } from "@/app/lib/actions/tweets";
+
 
 const DeleteTweetBtn = ({ id, imageUrl }: { id: number, imageUrl: string | null }) => {
     return (

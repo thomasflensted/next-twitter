@@ -3,20 +3,13 @@ import BookmarkBtn from "./BookmarkBtn";
 import LikeBtn from "./LikeBtn";
 
 type Props = {
-    data: {
-        id: number,
-        location: string,
-        isOwnTweet: boolean,
-        isBookmarked: boolean,
-        userId: number,
-        isLiked: boolean
-    }
-    loggedInUser: number
+    id: number,
+    location: string | null
+    isBookmarked: boolean,
+    isLiked: boolean
 }
 
-const TweetOptions = ({ data, loggedInUser }: Props) => {
-
-    const { location, isOwnTweet, id, isLiked, isBookmarked } = data;
+const TweetOptions = ({ id, location, isBookmarked, isLiked }: Props) => {
 
     return (
         <div className="w-full flex pb-4 justify-between">
@@ -26,10 +19,10 @@ const TweetOptions = ({ data, loggedInUser }: Props) => {
                     <p className="text-gray-400 text-xs">{location}</p>
                 </>}
             </div>
-            {!isOwnTweet && <div className="flex gap-4">
-                <LikeBtn userId={loggedInUser} tweetId={id} initialState={isLiked} />
-                <BookmarkBtn userId={loggedInUser} tweetId={id} initialState={isBookmarked} />
-            </div>}
+            <div className="flex gap-4">
+                <LikeBtn tweetId={id} initialState={isLiked} />
+                <BookmarkBtn tweetId={id} initialState={isBookmarked} />
+            </div>
         </div>
     )
 }

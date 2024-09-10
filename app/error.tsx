@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { FaArrowLeft } from "react-icons/fa6"
 
-export default function Error({ error, reset, }: { error: Error & { digest?: string }, reset: () => void }) {
+export default function Error({ error }: { error: Error & { digest?: string } }) {
 
     console.log(error);
 

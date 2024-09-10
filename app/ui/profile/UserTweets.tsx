@@ -1,19 +1,30 @@
-import { getTweetsByUser } from "@/app/data/dataTweets";
-import TweetComponent from "../tweet/Tweet";
-import { NoTweetsMessageOtherProfile, NoTweetsMessageOwnProfile } from "./NoTweetsMessages";
+import Tweet from "../tweet/Tweet";
+import { getUserTweets } from "@/app/lib/api/tweets";
 
-export default async function UserTweets({ ownHandle, id, handle, isOwnAccount }: { handle: string, id: number, ownHandle: string, isOwnAccount: boolean }) {
+export default async function UserTweets({ handle, userId }: { handle: string, userId: string }) {
 
-    const tweets = await getTweetsByUser(ownHandle, handle)
+    const { data, error } = await getUserTweets(handle, userId);
 
-    if (isOwnAccount && tweets.length === 0) return (<NoTweetsMessageOwnProfile />)
-    if (!isOwnAccount && tweets.length === 0) return (<NoTweetsMessageOtherProfile handle={handle} />)
+    if (error || !data) {
+        return (
+            <div className="flex items-center justify-center w-full mt-6">
+                <p className="text-red-500 font-semibold">Error: Unable to get tweets.</p >
+            </div>
+        )
+    }
+
+    if (data.length === 0) {
+        return (
+            <div className="flex items-center justify-center w-full mt-6">
+                <p className="text-red-500 font-semibold">@{handle} hasn&apos;t tweeted yet.</p >
+            </div>
+        )
+    }
 
     return (
-        <> {tweets.map(tweet =>
-            <TweetComponent
+        <> {data.map(tweet =>
+            <Tweet
                 key={tweet.id}
-                loggedInUser={id}
                 tweet={tweet}
             />)}
         </>

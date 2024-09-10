@@ -1,20 +1,18 @@
 import Link from "next/link"
 import DeleteTweetBtn from "./DeleteTweetBtn";
+import { TweetType } from "@/app/lib/types";
 
 type Props = {
-    data: {
-        id: number,
-        date: Date,
-        name: string,
-        handle: string,
-        image: string | null,
-        isOwnTweet: boolean,
-    }
+    date: TweetType['created_at'],
+    name: TweetType['name'],
+    handle: TweetType['handle'],
+    isOwnTweet: TweetType['is_own_tweet'],
+    id: TweetType['id'],
+    image: TweetType['image']
 }
 
-const TweetAccountRow = ({ data }: Props) => {
+const TweetAccountRow = ({ date, name, handle, isOwnTweet, id, image }: Props) => {
 
-    const { date, handle, name, id, image, isOwnTweet } = data;
     const formattedDate = new Date(date).toDateString();
 
     return (

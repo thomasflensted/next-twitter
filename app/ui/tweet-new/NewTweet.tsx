@@ -1,16 +1,20 @@
 import NewTweetContainer from "./NewTweetContainer"
 import NewTweetForm from "../forms/NewTweetForm"
 import ProfilePicColumn from "../tweet/ProfilePicColumn"
-import { getProfileImages, getUserProfile } from "@/app/data/dataUser"
+import { createClient } from "@/utils/supabase/server";
 
-export default async function NewTweet({ kindeId }: { kindeId: string }) {
+export default async function NewTweet({ userId }: { userId: string }) {
 
-    const { handle } = await getUserProfile(kindeId)
-    const { profile_pic } = await getProfileImages(handle)
+    const supabase = createClient()
+    const { data } = await supabase
+        .from('accounts')
+        .select('profile_pic, handle')
+        .eq('user_id', userId)
+        .single();
 
     return (
         <NewTweetContainer>
-            <ProfilePicColumn handle={handle} image={profile_pic} />
+            {data?.handle && data.profile_pic && <ProfilePicColumn handle={data?.handle} image={data?.profile_pic} />}
             <NewTweetForm />
         </NewTweetContainer>
     )

@@ -1,27 +1,40 @@
 import NameAndHandle from "./NameAndHandle";
 import EditAndLogoutBtns from "./EditAndLogoutBtns";
 import FollowBtn from "../follower-following-list/FollowBtn";
-import FollowCounts from "./FollowCounts";
 import ProfileLocation from "./ProfileLocation";
 import ProfileWebsite from "./ProfileWebsite";
-import { getProfileFromHandle } from "@/app/data/dataUser";
-import { doesUserFollowOtherUser } from "@/app/data/dataFollowers";
+import { notFound } from "next/navigation";
+import FollowCounts from "./FollowCounts";
+import { getAccountInfo } from "@/app/lib/api/users";
 
-export async function ProfileContent({ handle, isOwnAccount, ownId }: { handle: string, isOwnAccount: boolean, ownId: number }) {
+export async function ProfileContent({ handle, userId }: { handle: string; userId: string; }) {
 
-    const profile = await getProfileFromHandle(handle)
-    const isFollowingUser = await doesUserFollowOtherUser(ownId, profile.id)
+    const { data, error } = await getAccountInfo(handle, userId)
+
+    if (!data || error) notFound();
+
+    const { name,
+        bio,
+        website,
+        location,
+        is_own_account,
+        is_following,
+        followers_count,
+        following_count
+    } = data;
 
     return (
-        <div className="py-5 px-5 flex flex-col gap-3 border-b">
-            <NameAndHandle name={profile.name} handle={profile.handle} />
-            {profile.bio && <p className="text-emerald-600 font-light text-sm w-3/4">{profile.bio}</p>}
-            {profile.website && <ProfileWebsite url={profile.website} />}
-            {profile.location && <ProfileLocation location={profile.location} />}
+        <div className="py-5 px-5 flex flex-col gap-3 border-b min-h-36">
+            <div className="flex-grow flex gap-3 flex-col">
+                {<NameAndHandle name={name} handle={handle} />}
+                {bio && <p className="text-emerald-600 font-light text-sm w-3/4">{bio}</p>}
+                {website && <ProfileWebsite url={website} />}
+                {location && <ProfileLocation location={location} />}
+            </div>
             <div className="flex justify-between">
-                <FollowCounts handle={profile.handle} />
-                {isOwnAccount && <EditAndLogoutBtns />}
-                {!isOwnAccount && <FollowBtn handle={profile.handle} ownId={ownId} isFollowingUser={isFollowingUser} />}
+                <FollowCounts handle={handle} followers={followers_count} following={following_count} />
+                {is_own_account && <EditAndLogoutBtns />}
+                {!is_own_account && <FollowBtn handle={handle} isFollowingUser={is_following} />}
             </div>
         </div>
     )

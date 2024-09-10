@@ -40,3 +40,4 @@ next-env.d.ts
 /blob-report/
 /playwright/.cache/
 tests-examples
+e2e/demo-todo-app.spec.ts

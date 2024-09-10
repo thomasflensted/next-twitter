@@ -2,7 +2,7 @@
 import * as Dropdown from '@radix-ui/react-dropdown-menu';
 
 type Props = {
-    handleAI: (type: 'improve' | 'query' | 'fix') => Promise<void>
+    handleAI: (_type: 'improve' | 'query' | 'fix') => Promise<void>
 }
 
 const DropdownAI = ({ handleAI }: Props) => {
