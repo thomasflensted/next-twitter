@@ -11,7 +11,7 @@ const EditAndLogoutBtns = () => {
 
     const handleSignOut = async () => {
         await supabase.auth.signOut();
-        router.push('/')
+        router.push('/signin')
     }
 
     return (
