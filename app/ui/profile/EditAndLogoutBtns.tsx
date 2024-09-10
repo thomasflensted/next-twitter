@@ -2,13 +2,16 @@
 
 import { createClient } from "@/utils/supabase/client"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 const EditAndLogoutBtns = () => {
 
     const supabase = createClient()
+    const router = useRouter();
 
     const handleSignOut = async () => {
         await supabase.auth.signOut();
+        router.push('/')
     }
 
     return (
