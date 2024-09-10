@@ -17,7 +17,7 @@ const SignUpForm = () => {
     return (
         <form id="signup" action={action} className="flex-col flex gap-4 w-full mt-4">
             <div className="flex flex-col relative mt-1 w-full">
-                <LabelAndInput error={state.error?.email} label="Email" name="email" />
+                <LabelAndInput type='email' error={state.error?.email} label="Email" name="email" />
                 {state.error?.email && <p className="text-red-500 font-light mt-1 ml-1 text-xs">{state.error.email[0]}</p>}
             </div>
             <div className="flex flex-col relative mt-1">

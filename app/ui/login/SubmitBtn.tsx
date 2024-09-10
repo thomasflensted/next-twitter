@@ -7,6 +7,7 @@ const SubmitBtn = ({ formId, label }: { formId: string, label: string }) => {
     return (
         <button
             form={formId}
+            type="submit"
             className={`w-full border text-white ${!pending ? 'hover:bg-emerald-600 bg-emerald-500' : 'bg-gray-300'} font-medium rounded py-1.5`}>
             {label}
         </button>
