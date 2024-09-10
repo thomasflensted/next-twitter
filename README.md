@@ -1,6 +1,6 @@
 ### TODO
+- Update accounts settings
+- Google and Twitter OAuth
+- Pending state on sign in
 - Search
-- Suggestions if user follows noone
-- User avatar / profile pic
 - dark mode
-- cover photo
