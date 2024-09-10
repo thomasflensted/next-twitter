@@ -6,6 +6,7 @@ import PasswordVisibility from "./PasswordVisibility"
 import { useFormState } from "react-dom"
 import { useState } from "react"
 import { SignUpFormState, signup } from "@/app/lib/actions/authActions"
+import SubmitBtn from "./SubmitBtn"
 
 const SignUpForm = () => {
 
@@ -14,7 +15,7 @@ const SignUpForm = () => {
     const [state, action] = useFormState(signup, initialState)
 
     return (
-        <form action={action} className="flex-col flex gap-4 w-full mt-4">
+        <form id="signup" action={action} className="flex-col flex gap-4 w-full mt-4">
             <div className="flex flex-col relative mt-1 w-full">
                 <LabelAndInput error={state.error?.email} label="Email" name="email" />
                 {state.error?.email && <p className="text-red-500 font-light mt-1 ml-1 text-xs">{state.error.email[0]}</p>}
@@ -43,9 +44,7 @@ const SignUpForm = () => {
                 </LabelAndInput>
                 {state.error?.confirm && <p className="text-red-500 font-light mt-1 ml-1 text-xs">{state.error.confirm[0]}</p>}
             </div>
-            <button className="w-full border text-white hover:bg-emerald-600 bg-emerald-500 font-normal rounded py-1.5">
-                Sign Up
-            </button>
+            <SubmitBtn label="Sign Up" formId="signup" />
             {state.error?.general &&
                 <div className="bg-red-50 border border-red-500 rounded w-full py-1.5 px-2">
                     <p className="font-medium text-red-500 text-xs">{state.error.general}</p>
