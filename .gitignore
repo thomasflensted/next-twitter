@@ -41,3 +41,4 @@ next-env.d.ts
 /playwright/.cache/
 tests-examples
 e2e/demo-todo-app.spec.ts
+demo-todo-app.spec.ts
