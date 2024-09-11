@@ -22,7 +22,7 @@ const page = () => {
             </div>
             <div className="flex gap-1 text-xs text-emerald-600 justify-left w-full mt-2">
                 <p className="font-light">New user?</p>
-                <Link className="font-medium" href="/login">Sign up here.</Link>
+                <Link className="font-medium" href="/signup">Sign up here.</Link>
             </div>
         </div >
     )
