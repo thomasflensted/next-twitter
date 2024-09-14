@@ -24,7 +24,7 @@ const LabelAndInput = ({
 }: Props) => {
 
     return (
-        <div className="relative">
+        <div className="relative text-left">
             <label className={`font-light -top-2 left-2 px-1 text-xs absolute text-emerald-500 ${bg}`}>{label}</label>
             {!textarea ? <input
                 type={type}
