@@ -221,12 +221,12 @@ export type Database = {
         Args: { current_user_id: string },
         Returns: ProfilePreview[]
       },
-      get_following: {
-        Args: { user_handle: string }
+      get_users_followed_by_handle: {
+        Args: { target_handle: string, current_user_id: string },
         Returns: ProfilePreview[]
       },
-      get_followers: {
-        Args: { user_handle: string }
+      get_followers_of_handle: {
+        Args: { target_handle: string, current_user_id: string },
         Returns: ProfilePreview[]
       },
       get_tweet: {
