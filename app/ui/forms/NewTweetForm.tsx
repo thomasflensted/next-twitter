@@ -27,7 +27,7 @@ const NewTweetForm = () => {
         setImage(null);
     }
 
-    const initialState = { success: '', errors: {} };
+    const initialState = { success: '', errors: undefined };
     const [state, dispatch] = useFormState(postTweet, initialState)
 
     return (
