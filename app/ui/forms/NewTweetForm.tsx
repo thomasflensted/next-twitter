@@ -3,7 +3,7 @@
 import TextField from "../tweet-new/TextField"
 import OptionsBar from "../tweet-new/OptionsBar"
 import SubmitBtn from "../tweet-new/SubmitBtn"
-import { SetStateAction, createContext, useState } from "react"
+import { Dispatch, SetStateAction, createContext, useState } from "react"
 import NewTweetImage from "../tweet-new/NewTweetImage"
 
 import { useFormState } from "react-dom"
@@ -12,7 +12,7 @@ import { postTweet } from "@/app/lib/actions/tweets"
 
 type ContextType = {
     text: string,
-    setText: React.Dispatch<SetStateAction<string>>
+    setText: Dispatch<SetStateAction<string>>
 }
 
 export const TextContext = createContext<ContextType | null>(null);
