@@ -90,24 +90,24 @@ export const ProfileImagesSkeleton = () => {
 }
 
 export const EditAccountSkeleton = () => {
+
+    const widths = ["w-1/3", "w-1/2", "w-2/3", "w-1/4", "w-3/4"];
+
     return (
-        <div className="flex flex-col gap-6 animate-pulse">
-            <div className="w-full flex flex-col gap-1 relative">
-                <SkeletonBar width="w-1/4" />
-                <SkeletonBar width="w-full" />
+        <div className="w-11/12 flex flex-col gap-6 mb-12 animate-pulse">
+            <div className="flex flex-col gap-4 items-center">
+                <div className="w-28 rounded-full h-28 bg-gray-200 relative overflow-hidden"></div>
             </div>
-            <div className="w-full flex flex-col gap-1 relative">
-                <SkeletonBar width="w-1/4" />
-                <SkeletonBar width="w-full" />
+            <div className="flex flex-col gap-1">
+                <div className="w-full rounded border h-40 bg-gray-200 overflow-hidden"></div>
+                <div className="bg-gray-200 w-full transition-colors border rounded py-1.5 h-6"></div>
             </div>
-            <div className="w-full flex flex-col gap-1 relative">
-                <SkeletonBar width="w-1/4" />
-                <SkeletonBar width="w-full" />
-            </div>
-            <div className="w-full flex flex-col gap-1 relative">
-                <SkeletonBar width="w-1/4" />
-                <SkeletonBar width="w-full" />
-            </div>
+            {widths.map(w => (
+                <div key={w} className="flex flex-col gap-1">
+                    <SkeletonBar width={w} />
+                    <SkeletonBar width="w-full" />
+                </div>
+            ))}
         </div>
     )
 }

@@ -4,6 +4,7 @@ import { AccountState, updateAccount } from "@/app/lib/actions/userActions"
 import LabelAndInput from "../login/LabelAndInput"
 import SubmitBtn from "../login/SubmitBtn"
 import { useFormState } from "react-dom"
+import { useRouter } from "next/navigation"
 
 type Props = {
     name: string,
@@ -19,6 +20,7 @@ const AccountForm = ({ ...data }: Props) => {
 
     const initialState: AccountState = { error: null }
     const [state, action] = useFormState(updateAccount, initialState)
+    const router = useRouter()
 
     return (
         <form id="account" action={action} className="w-11/12 flex flex-col gap-6 mb-12">
@@ -49,7 +51,10 @@ const AccountForm = ({ ...data }: Props) => {
             <LabelAndInput error={state.error?.website} placeholder={data.website ? data.website : ''} bg="bg-gray-50" name="website" label="Website">
                 {state.error?.website && <p className="text-red-500 font-light mt-1 ml-1 text-xs">{state.error.website[0]}</p>}
             </LabelAndInput>
-            <SubmitBtn formId="account" label="Save" />
+            <div className="flex gap-1">
+                <button onClick={() => router.back()} className="w-full border font-medium rounded py-1.5 text-red-500 hover:bg-gray-100">Cancel</button>
+                <SubmitBtn formId="account" label="Save" />
+            </div>
         </form >
     )
 }
