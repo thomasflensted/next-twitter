@@ -1,5 +1,4 @@
 import BackHeader from "@/app/ui/global/BackHeader";
-import AccountForm from "@/app/ui/forms/AccountForm";
 import { Suspense } from "react";
 import EditAccount from "@/app/ui/profile/EditAccount";
 
