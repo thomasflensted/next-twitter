@@ -3,8 +3,6 @@ import SignUpForm from "@/app/ui/login/SignUpForm"
 
 const page = async () => {
 
-    const providers = ['github'] as const;
-
     return (
         <div className="rounded-md bg-white border w-1/4 py-4 flex flex-col gap-2 px-5 mt-10">
             <h2 className="text-emerald-600 font-medium text-lg">Sign Up</h2>
