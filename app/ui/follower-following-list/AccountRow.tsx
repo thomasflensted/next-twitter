@@ -6,7 +6,7 @@ import { ProfilePreview } from "@/app/lib/types";
 
 const ProfileRow = ({ profile }: { profile: ProfilePreview }) => {
 
-    const { handle, name, bio, profile_pic } = profile;
+    const { handle, name, bio, profile_pic, is_following, is_myself } = profile;
 
     return (
         <div className="flex px-6 py-3 border-b items-center">
@@ -14,7 +14,7 @@ const ProfileRow = ({ profile }: { profile: ProfilePreview }) => {
             <div className="ml-4 flex flex-col flex-grow">
                 <div className="flex justify-between items-center">
                     <Link href={'/' + handle}><NameAndHandle name={name} handle={handle} /></Link>
-                    <FollowBtn handle={handle} isFollowingUser={false} />
+                    {!is_myself && <FollowBtn handle={handle} isFollowingUser={is_following} />}
                 </div>
                 <p className="font-light text-xs mt-2">{bio}</p>
             </div>
