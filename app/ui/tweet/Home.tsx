@@ -7,7 +7,6 @@ import { MultipleTweetsSkeleton, NewTweetFormSkeleton } from "../skeletons/skele
 const Home = async () => {
 
     const userId = await getUserId();
-    console.log(userId)
 
     return (
         <>
