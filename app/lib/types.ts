@@ -19,9 +19,24 @@ export type TweetType = RawTweet & AccountProperties & TweetExtras
 
 // USERS
 type RawProfile = Omit<Database['public']['Tables']['accounts']['Row'], 'user_id'>;
-type UserExtras = { is_own_account: boolean, following_count: number, followers_count: number, is_following: boolean };
+
+type UserExtras = {
+    is_own_account: boolean,
+    following_count: number,
+    followers_count: number,
+    is_following: boolean
+};
+
 export type Profile = RawProfile & UserExtras;
-export type ProfilePreview = { name: string, handle: string, bio: string, profile_pic: string }
+
+export type ProfilePreview = {
+    name: string,
+    handle: string,
+    bio: string,
+    profile_pic: string,
+    is_following: boolean,
+    is_myself: boolean
+};
 
 export type TweetValidationState = {
     success?: string,
