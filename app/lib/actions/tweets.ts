@@ -1,37 +1,38 @@
 'use server'
 
 import { revalidatePath, revalidateTag } from "next/cache";
-import { escapeSingleQuotes } from "@/app/lib/helpers";
 import { getUserId } from "@/app/lib/api/users";
 import { createClient } from "@/utils/supabase/server";
-
-
-import { TweetValidationForm } from "../validation";
 import { uploadImageToS3, deleteImageFromS3 } from "../s3Bucket";
 import { TweetValidationState } from "../types";
+import { escapeSingleQuotes } from "../helpers";
+import { TweetSchema } from "../validation/tweetSchema";
 
-
-export async function postTweet(prevState: TweetValidationState, formData: FormData): Promise<TweetValidationState> {
+export async function postTweet(prevState: TweetValidationState, formData: FormData) {
 
     const supabase = createClient()
     const userId = await getUserId()
-    const content = formData.get('content') as string;
-    const initialImage = formData.get('image') as File;
+    const rawContent = formData.get('content');
+    const rawImage = formData.get('image');
 
-    const validationResult = TweetValidationForm.safeParse({ content, image: initialImage });
-    if (!validationResult.success) return {
+    const validatedData = TweetSchema.safeParse({ content: rawContent, image: rawImage });
+
+    if (!validatedData.success) return {
         message: "Something went wrong",
-        errors: validationResult.error.flatten().fieldErrors
+        errors: validatedData.error.flatten().fieldErrors
     }
 
-    const { content: textContent, image: tweetImage } = validationResult.data;
-    const s3url = tweetImage ? await uploadImageToS3(tweetImage) : null;
+    const { content, image } = validatedData.data;
+
+    const s3url = image
+        ? await uploadImageToS3(image)
+        : null;
 
     await supabase
         .from('tweets')
         .insert({
             user_id: userId,
-            content: escapeSingleQuotes(textContent),
+            content: escapeSingleQuotes(content),
             image: s3url?.url.split('?')[0]
         })
 
@@ -59,6 +60,7 @@ export async function bookmarkTweet(tweetId: number) {
     await supabase
         .from('bookmarks')
         .insert({ user_id: userId, bookmarked_tweet: tweetId });
+    console.log('success');
 }
 
 export async function unBookmarkTweet(tweetId: number) {
