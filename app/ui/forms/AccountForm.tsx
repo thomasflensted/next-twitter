@@ -7,6 +7,7 @@ import { useFormState } from "react-dom"
 import { useRouter } from "next/navigation"
 import CoverPhotoInput from "./CoverPhotoInput"
 import ProfilePicInput from "./ProfilePicInput"
+import DeleteAccountBtn from "./DeleteAccountBtn"
 
 type Props = {
     name: string,
@@ -52,6 +53,7 @@ const AccountForm = (data: Props) => {
             </div>
             <div className="flex gap-1">
                 <button onClick={() => router.back()} className="w-full border font-medium rounded py-1.5 text-red-500 hover:bg-gray-100">Cancel</button>
+                <DeleteAccountBtn />
                 <SubmitBtn formId="account" label="Save" />
             </div>
         </form >
