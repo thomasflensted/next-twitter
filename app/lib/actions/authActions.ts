@@ -84,33 +84,14 @@ export async function signup(prevState: SignUpFormState, formData: FormData) {
 
     if (!res.success) {
         return { error: { ...res.error.flatten().fieldErrors, general: '' } }
-    } else {
-        const { error } = await supabase.auth.signUp({
-            email: res.data.email,
-            password: res.data.password
-        })
-        if (error) {
-            return { error: { general: error.message } }
-        }
     }
 
-    const userId = await getUserId();
-
-    const tempName = res.data.email.split('@')[0];
-    const bio = await queryAI(
-        `Write a short bio about a made-up person. 
-        Deduce the users name from this: ${tempName}.
-        End it with "Made by AI."`);
-
-    await supabase
-        .from('accounts')
-        .insert({
-            user_id: userId,
-            name: tempName,
-            handle: tempName,
-            bio
-        })
-
-    revalidatePath('/', 'layout')
-    redirect('/')
+    const { error } = await supabase.auth.signUp({
+        email: res.data.email,
+        password: res.data.password
+    })
+    if (error) {
+        return { error: { general: error.message } }
+    }
+    redirect('/account')
 }
