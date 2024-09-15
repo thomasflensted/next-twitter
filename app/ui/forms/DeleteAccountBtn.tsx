@@ -1,3 +1,4 @@
+import { deleteAccount } from '@/app/lib/actions/userActions';
 import * as Dialog from '@radix-ui/react-dialog';
 
 const DeleteAccountBtn = () => {
@@ -11,7 +12,7 @@ const DeleteAccountBtn = () => {
                     <Dialog.Description className="text-sm font-light">This action cannot be undone.</Dialog.Description>
                     <div className="flex gap-1 mt-4">
                         <button className="w-full border font-medium rounded py-1.5 text-red-500 hover:bg-gray-100">Cancel</button>
-                        <button onClick={() => console.log('delete')} className="w-full bg-red-500 font-medium rounded py-1.5 text-white hover:bg-red-600">Delete</button>
+                        <button onClick={() => deleteAccount()} className="w-full bg-red-500 font-medium rounded py-1.5 text-white hover:bg-red-600">Delete</button>
                     </div>
                 </Dialog.Content>
             </Dialog.Portal>

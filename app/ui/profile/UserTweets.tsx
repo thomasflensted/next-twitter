@@ -16,7 +16,7 @@ export default async function UserTweets({ handle, userId }: { handle: string, u
     if (data.length === 0) {
         return (
             <div className="flex items-center justify-center w-full mt-6">
-                <p className="text-red-500 font-semibold">@{handle} hasn&apos;t tweeted yet.</p >
+                <p className="text-emerald-600 font-semibold">@{handle} hasn&apos;t tweeted yet.</p >
             </div>
         )
     }

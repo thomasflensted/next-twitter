@@ -107,3 +107,15 @@ export async function updateAccount(
         redirect('/' + res.data.handle);
     }
 }
+
+export async function deleteAccount() {
+    const supabase = createClient()
+    const userId = await getUserId();
+    if (!userId) return;
+    await supabase
+        .from('accounts')
+        .delete()
+        .eq('user_id', userId);
+    revalidatePath('/');
+    redirect('/');
+}
