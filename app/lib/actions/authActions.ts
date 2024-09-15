@@ -4,8 +4,6 @@ import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
-import { getUserId } from '../api/users'
-import { queryAI } from './aiActions'
 
 export type SignUpFormState = {
     error: {
