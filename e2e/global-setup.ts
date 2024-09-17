@@ -40,7 +40,7 @@ async function signUpAndSaveState(browserType: BrowserType, browserName: 'chromi
 }
 
 async function globalSetup() {
-    console.log('\nSetting up browsers');
+    console.log('Setting up browsers');
 
     await signUpAndSaveState(chromium, 'chromium');
     console.log('- Chromium set up');
