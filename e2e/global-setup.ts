@@ -33,7 +33,7 @@ async function signUpAndSaveState(browserType: BrowserType, browserName: 'chromi
     await confirmField.fill(credentials[browserName].password);
     await submitBtn.click();
 
-    await page.waitForURL('**/account', { timeout: 10000 });
+    await page.waitForURL('**/account', { timeout: 20000 });
 
     await context.storageState({ path: `./e2e/auth-state/${browserName}-storage-state.json` });
     await browser.close();

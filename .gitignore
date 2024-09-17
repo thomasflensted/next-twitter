@@ -42,4 +42,3 @@ next-env.d.ts
 tests-examples
 e2e/demo-todo-app.spec.ts
 demo-todo-app.spec.ts
-e2e/auth-state
