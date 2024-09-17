@@ -3,15 +3,15 @@ import { BrowserType, chromium, firefox, webkit } from '@playwright/test';
 
 const credentials = {
     chromium: {
-        email: `chromium${process.env.TEST_EMAIL!}`,
+        email: `chromium@test.com`,
         password: 'testpassword123'
     },
     firefox: {
-        email: `firefox${process.env.TEST_EMAIL!}`,
+        email: `firefox@test.com`,
         password: 'testpassword123'
     },
     webkit: {
-        email: `webkit${process.env.TEST_EMAIL!}`,
+        email: `webkit@test.com`,
         password: 'testpassword123'
     },
 } as const
@@ -33,7 +33,6 @@ async function signUpAndSaveState(browserType: BrowserType, browserName: 'chromi
     await confirmField.fill(credentials[browserName].password);
     await submitBtn.click();
 
-    await page.waitForSelector('#signup', { state: 'detached', timeout: 5000 });
     await page.waitForURL('**/account', { timeout: 10000 });
 
     await context.storageState({ path: `./e2e/auth-state/${browserName}-storage-state.json` });
