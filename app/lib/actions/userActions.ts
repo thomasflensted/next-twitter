@@ -112,10 +112,14 @@ export async function deleteAccount() {
     const supabase = createClient()
     const userId = await getUserId();
     if (!userId) return;
-    await supabase
+    const { error } = await supabase
         .from('accounts')
         .delete()
         .eq('user_id', userId);
-    revalidatePath('/');
-    redirect('/');
+    if (!error) {
+        revalidatePath('/');
+        redirect('/');
+    } else {
+        return "An error occured."
+    }
 }
