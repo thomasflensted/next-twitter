@@ -24,7 +24,7 @@ const Tweets = async ({ userId }: { userId: string }) => {
     )
 
     return (
-        <div>
+        <div id="feed">
             {data && data.map(tweet => (
                 <Tweet key={tweet.id} tweet={tweet} />))}
         </div>
