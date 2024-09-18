@@ -24,7 +24,8 @@ test.describe('Tweet page test', () => {
         ])
 
         await tweetInput.fill(`${TWEET_CONTENT} ${browserName} browser`);
-        await expect(submitBtn).toBeEnabled();
+        await expect(submitBtn).toBeVisible({ timeout: 1000 });
+        await expect(submitBtn).toBeEnabled({ timeout: 1000 });
         await submitBtn.click();
 
         await Promise.all([
